@@ -164,8 +164,8 @@
     <section class="border-b border-white/10 bg-[#060A08]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                @foreach ($statsData as $index => $st)
-                    <div class="p-4 rounded-2xl glass-panel spotlight-card reveal delay-{{ ($index + 1) * 100 }}">
+                @foreach ($statsData as $st)
+                    <div class="p-4 rounded-2xl glass-panel spotlight-card reveal delay-{{ min($loop->iteration * 100, 800) }}">
                         <span class="text-2xl sm:text-4xl font-extrabold text-[#34D399] font-mono block mb-1" data-counter="{{ $st['value'] ?? '0' }}">
                             {{ $st['value'] ?? '0' }}
                         </span>
@@ -213,12 +213,12 @@
             </div>
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($services as $index => $service)
-                    <article class="glass-panel spotlight-card reveal delay-{{ (($index % 3) + 1) * 100 }} rounded-2xl p-6 sm:p-8 flex flex-col justify-between group">
+                @foreach ($services as $service)
+                    <article class="glass-panel spotlight-card reveal delay-{{ (($loop->index % 3) + 1) * 100 }} rounded-2xl p-6 sm:p-8 flex flex-col justify-between group">
                         <div>
                             <div class="flex items-center justify-between mb-5">
                                 <span class="font-mono text-xs font-bold text-[#34D399] px-2.5 py-1 glass-pill rounded-lg">
-                                    LAYANAN 0{{ $index + 1 }}
+                                    LAYANAN 0{{ $loop->iteration }}
                                 </span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#10B981]/40 group-hover:bg-[#10B981] transition-colors"></span>
                             </div>

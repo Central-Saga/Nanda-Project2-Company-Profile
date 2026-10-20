@@ -32,12 +32,12 @@
             </div>
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach ($services as $index => $service)
+                @foreach ($services as $service)
                     <article class="glass-panel rounded-3xl p-7 sm:p-8 flex flex-col justify-between group border border-white/10 hover:border-[#10B981]/50 transition-all shadow-lg hover:shadow-[0_15px_35px_rgba(16,185,129,0.15)]">
                         <div>
                             <div class="flex items-center justify-between mb-5">
                                 <span class="font-mono text-xs font-bold text-[#34D399] px-3 py-1 glass-pill rounded-lg">
-                                    0{{ $index + 1 }}
+                                    0{{ $loop->iteration }}
                                 </span>
                                 @if ($service->is_featured)
                                     <span class="text-[11px] font-mono text-[#10B981] px-2.5 py-0.5 rounded-full bg-[#10B981]/15 border border-[#10B981]/30">
