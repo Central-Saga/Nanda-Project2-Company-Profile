@@ -58,6 +58,118 @@ body {
         #080D0B;
 }
 
+/* Scroll Reveal Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger Delays */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+.delay-600 { transition-delay: 600ms; }
+.delay-700 { transition-delay: 700ms; }
+.delay-800 { transition-delay: 800ms; }
+
+/* Subtle Ambient Mesh Float */
+@keyframes ambientFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(30px, -20px) scale(1.04);
+    }
+    100% {
+        transform: translate(-20px, 15px) scale(0.97);
+    }
+}
+
+.animate-ambient-float {
+    animation: ambientFloat 16s ease-in-out infinite alternate;
+}
+
+/* Button Shimmer Light Sweep */
+.btn-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        60deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.22) 50%,
+        transparent 70%
+    );
+    transform: rotate(30deg) translateX(-120%);
+    animation: shimmerSweep 5s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes shimmerSweep {
+    0%, 70% {
+        transform: rotate(30deg) translateX(-120%);
+    }
+    82%, 100% {
+        transform: rotate(30deg) translateX(120%);
+    }
+}
+
+/* Interactive Cursor Spotlight on Cards */
+.spotlight-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.spotlight-card::before {
+    content: '';
+    position: absolute;
+    top: var(--mouse-y, -1000px);
+    left: var(--mouse-x, -1000px);
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.spotlight-card:hover::before {
+    opacity: 1;
+}
+
+/* Floating Badges & Icons */
+@keyframes softFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.animate-soft-float {
+    animation: softFloat 4s ease-in-out infinite;
+}
+
 /* Modern Frosted Glass Panel */
 .glass-panel {
     background: rgba(16, 23, 19, 0.72);

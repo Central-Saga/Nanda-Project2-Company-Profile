@@ -63,7 +63,7 @@
 
                 <!-- Desktop CTA Button -->
                 <div class="hidden md:flex items-center space-x-3">
-                    <a href="/kontak" class="btn-emerald inline-flex items-center justify-center min-h-[42px] px-5 py-2 text-xs sm:text-sm font-semibold rounded-xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#10B981]">
+                    <a href="/kontak" class="btn-emerald btn-shimmer inline-flex items-center justify-center min-h-[42px] px-5 py-2 text-xs sm:text-sm font-semibold rounded-xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#10B981]">
                         Diskusikan Proyek Anda
                     </a>
                 </div>

@@ -12,13 +12,13 @@
          ========================================================================= -->
     <section class="relative pt-16 pb-24 md:pt-24 md:pb-32 overflow-hidden bg-ambient-mesh border-b border-white/10">
         <!-- Subtle Ambient Lighting Elements -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[750px] h-[360px] bg-[#10B981]/15 blur-[140px] pointer-events-none rounded-full"></div>
-        <div class="absolute top-1/4 right-5 w-[400px] h-[300px] bg-[#34D399]/10 blur-[130px] pointer-events-none rounded-full"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[750px] h-[360px] bg-[#10B981]/15 blur-[140px] pointer-events-none rounded-full animate-ambient-float"></div>
+        <div class="absolute top-1/4 right-5 w-[400px] h-[300px] bg-[#34D399]/10 blur-[130px] pointer-events-none rounded-full animate-ambient-float"></div>
 
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
 
             <!-- Studio Announcement Pill -->
-            <div class="inline-flex items-center space-x-2.5 px-4 py-1.5 glass-pill rounded-full text-xs font-mono text-[#A0ADA5] mb-8 hover:border-[#10B981]/40 transition-colors">
+            <div class="inline-flex items-center space-x-2.5 px-4 py-1.5 glass-pill rounded-full text-xs font-mono text-[#A0ADA5] mb-8 hover:border-[#10B981]/40 transition-colors animate-soft-float">
                 <span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
                 <span class="text-white font-semibold">{{ $siteProfile->company_name ?? config('app.name') }}</span>
                 <span class="text-white/20">&bull;</span>
@@ -53,7 +53,7 @@
                         Salin Email
                     </button>
                     <a href="/kontak"
-                       class="flex-1 sm:flex-none px-6 py-2 text-xs font-semibold text-white btn-emerald rounded-xl min-h-[40px] flex items-center justify-center">
+                       class="flex-1 sm:flex-none px-6 py-2 text-xs font-semibold text-white btn-emerald btn-shimmer rounded-xl min-h-[40px] flex items-center justify-center">
                         Diskusikan Proyek
                     </a>
                 </div>
@@ -164,9 +164,9 @@
     <section class="border-b border-white/10 bg-[#060A08]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                @foreach ($statsData as $st)
-                    <div class="p-4 rounded-2xl glass-panel">
-                        <span class="text-2xl sm:text-4xl font-extrabold text-white font-mono block mb-1">
+                @foreach ($statsData as $index => $st)
+                    <div class="p-4 rounded-2xl glass-panel spotlight-card reveal delay-{{ ($index + 1) * 100 }}">
+                        <span class="text-2xl sm:text-4xl font-extrabold text-[#34D399] font-mono block mb-1" data-counter="{{ $st['value'] ?? '0' }}">
                             {{ $st['value'] ?? '0' }}
                         </span>
                         <span class="text-xs sm:text-sm text-[#A0ADA5] font-mono">
@@ -182,7 +182,7 @@
          02 - LAYANAN SECTION (Minimalist Strategic Services)
          ========================================================================= -->
     <section id="layanan" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-white/10 relative">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal">
             <div>
                 <div class="inline-flex items-center space-x-2 px-3 py-1 glass-pill rounded-full text-xs font-mono text-[#34D399] mb-3">
                     <span class="text-[#10B981]">&bull;</span>
@@ -199,7 +199,7 @@
                 <a href="/layanan" class="inline-flex items-center px-4 py-2 text-xs font-mono font-medium text-[#A0ADA5] hover:text-white glass-pill rounded-xl min-h-[44px]">
                     Semua Layanan &rarr;
                 </a>
-                <a href="/kontak" class="inline-flex items-center px-5 py-2.5 text-xs font-mono font-semibold text-white btn-emerald rounded-xl min-h-[44px]">
+                <a href="/kontak" class="inline-flex items-center px-5 py-2.5 text-xs font-mono font-semibold text-white btn-emerald btn-shimmer rounded-xl min-h-[44px]">
                     Konsultasikan Kebutuhan Anda
                 </a>
             </div>
@@ -214,7 +214,7 @@
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($services as $index => $service)
-                    <article class="glass-panel rounded-2xl p-6 sm:p-8 flex flex-col justify-between group">
+                    <article class="glass-panel spotlight-card reveal delay-{{ (($index % 3) + 1) * 100 }} rounded-2xl p-6 sm:p-8 flex flex-col justify-between group">
                         <div>
                             <div class="flex items-center justify-between mb-5">
                                 <span class="font-mono text-xs font-bold text-[#34D399] px-2.5 py-1 glass-pill rounded-lg">
@@ -273,7 +273,7 @@
          ========================================================================= -->
     @if (isset($featuredProjects) && $featuredProjects->isNotEmpty())
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-white/10 relative">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal">
                 <div>
                     <div class="inline-flex items-center space-x-2 px-3 py-1 glass-pill rounded-full text-xs font-mono text-[#34D399] mb-3">
                         <span class="text-[#10B981]">&bull;</span>
@@ -287,7 +287,7 @@
                     </p>
                 </div>
                 <div class="mt-6 md:mt-0">
-                    <a href="/proyek" class="inline-flex items-center px-5 py-2.5 text-xs font-mono font-semibold text-white btn-emerald rounded-xl min-h-[44px]">
+                    <a href="/proyek" class="inline-flex items-center px-5 py-2.5 text-xs font-mono font-semibold text-white btn-emerald btn-shimmer rounded-xl min-h-[44px]">
                         Eksplorasi Seluruh Proyek &rarr;
                     </a>
                 </div>
@@ -295,7 +295,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 @foreach ($featuredProjects as $project)
-                    <article class="glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between group border border-white/10 hover:border-[#10B981]/40 transition-all">
+                    <article class="glass-panel spotlight-card reveal delay-{{ (($loop->index % 2) + 1) * 150 }} rounded-3xl p-6 sm:p-8 flex flex-col justify-between group border border-white/10 hover:border-[#10B981]/40 transition-all">
                         <div>
                             @if (!empty($project->thumbnail))
                                 <div class="mb-6 overflow-hidden rounded-2xl bg-[#080D0B] border border-white/10 aspect-[16/10] relative">
@@ -405,7 +405,7 @@
          02.7 - TECHNOLOGY STACK (Eksplorasi Teknologi)
          ========================================================================= -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-white/10 relative">
-        <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal">
             <div class="inline-flex items-center space-x-2 px-3 py-1 glass-pill rounded-full text-xs font-mono text-[#34D399] mb-3">
                 <span class="text-[#10B981]">&bull;</span>
                 <span>TEKNOLOGI KELAS INDUSTRI</span>
@@ -420,7 +420,7 @@
 
         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 text-center">
             <!-- 1. Laravel -->
-            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div class="group p-4 rounded-2xl glass-panel spotlight-card reveal delay-100 hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#FF2D20]/40 group-hover:bg-[#FF2D20]/10 group-hover:shadow-[0_0_20px_rgba(255,45,32,0.25)] transition-all duration-300">
                     <svg class="w-6 h-6 text-[#FF2D20] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M8.406 3.513l8.47 4.89-8.47 4.89-8.406-4.89 8.406-4.89zm1.094 11.233v6.754l7.375-4.258v-6.754l-7.375 4.258zm-2.188 0l-7.312-4.258v6.754l7.312 4.258v-6.754zm10.562-3.832l4.126-2.382v-3.793l-4.126 2.382v3.793zm1.094-7.051l3.032 1.75 3.032-1.75-3.032-1.75-3.032 1.75zm5.156 3.258v3.793l4.126-2.382v-3.793l-4.126 2.382z"/>
@@ -431,7 +431,7 @@
             </div>
 
             <!-- 2. PHP 8.3+ -->
-            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div class="group p-4 rounded-2xl glass-panel spotlight-card reveal delay-200 hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#777BB4]/40 group-hover:bg-[#777BB4]/10 group-hover:shadow-[0_0_20px_rgba(119,123,180,0.25)] transition-all duration-300">
                     <svg class="w-6 h-6 text-[#777BB4] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-5.7 13.5h-1.8l1.4-7h3c1.8 0 2.8.9 2.6 2.3-.2 1.6-1.7 2.7-3.4 2.7H7.1l-.8 2zm5.5 0h-1.8l1.4-7h1.8l-.6 3.1h1.8c1.8 0 2.8.9 2.6 2.3-.3 1.6-1.8 2.7-3.5 2.7h-1.5l-.4 1.9zm8.2-5c-.2 1.6-1.7 2.7-3.4 2.7H15l-.4 2.3h-1.8l1.4-7h3c1.8 0 2.8.9 2.8 2z"/>
@@ -442,7 +442,7 @@
             </div>
 
             <!-- 3. PostgreSQL -->
-            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div class="group p-4 rounded-2xl glass-panel spotlight-card reveal delay-300 hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#336791]/40 group-hover:bg-[#336791]/10 group-hover:shadow-[0_0_20px_rgba(51,103,145,0.25)] transition-all duration-300">
                     <svg class="w-6 h-6 text-[#4169E1] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm5.8 13.4c-.4.8-1 1.4-1.8 1.8a5 5 0 0 1-2.4.6 4.9 4.9 0 0 1-3.6-1.5 5.5 5.5 0 0 1-1.4-3.8c0-1.6.5-2.9 1.5-4a5.2 5.2 0 0 1 3.8-1.6c1.3 0 2.4.4 3.3 1.2a5.4 5.4 0 0 1 1.7 3.3h-2.1a3.5 3.5 0 0 0-1-2 3.1 3.1 0 0 0-2-.7 3.2 3.2 0 0 0-2.4 1 4.1 4.1 0 0 0-.9 2.7 4.1 4.1 0 0 0 .9 2.8 3.1 3.1 0 0 0 2.4 1 3 3 0 0 0 2.1-.8 3.6 3.6 0 0 0 1-2.1h-3.1v-1.7h5.2v3.7z"/>
@@ -453,7 +453,7 @@
             </div>
 
             <!-- 4. Tailwind 4 -->
-            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div class="group p-4 rounded-2xl glass-panel spotlight-card reveal delay-400 hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#38BDF8]/40 group-hover:bg-[#38BDF8]/10 group-hover:shadow-[0_0_20px_rgba(56,189,248,0.25)] transition-all duration-300">
                     <svg class="w-6 h-6 text-[#38BDF8] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/>
@@ -464,7 +464,7 @@
             </div>
 
             <!-- 5. Vue / React -->
-            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div class="group p-4 rounded-2xl glass-panel spotlight-card reveal delay-500 hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#61DAFB]/40 group-hover:bg-[#61DAFB]/10 group-hover:shadow-[0_0_20px_rgba(97,218,251,0.25)] transition-all duration-300">
                     <svg class="w-6 h-6 text-[#61DAFB] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                         <circle cx="12" cy="12" r="2.2" fill="currentColor"/>
@@ -478,7 +478,7 @@
             </div>
 
             <!-- 6. Flutter -->
-            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div class="group p-4 rounded-2xl glass-panel spotlight-card reveal delay-600 hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#02569B]/40 group-hover:bg-[#02569B]/10 group-hover:shadow-[0_0_20px_rgba(2,86,155,0.25)] transition-all duration-300">
                     <svg class="w-6 h-6 text-[#54C5F8] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M14.314 0L2.3 12 6 15.7 21.684 0zm.014 11.072L7.857 17.543 14.328 24H21.7l-6.471-6.457 6.471-6.471z"/>
@@ -489,7 +489,7 @@
             </div>
 
             <!-- 7. Docker -->
-            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div class="group p-4 rounded-2xl glass-panel spotlight-card reveal delay-700 hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#2496ED]/40 group-hover:bg-[#2496ED]/10 group-hover:shadow-[0_0_20px_rgba(36,150,237,0.25)] transition-all duration-300">
                     <svg class="w-6 h-6 text-[#2496ED] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.186.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.186.186.186m5.893 2.715h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186h-2.119a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185m-2.928 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186H2.208a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185M23.97 11.23a8.91 8.91 0 00-3.69-5.188l-.348-.22-.245.333a5.534 5.534 0 01-2.905 1.956c-.23.056-.279.16-.273.395.034 1.25-.422 1.99-1.284 2.502l-.248.147.28.077c1.37.378 2.656.974 3.738 1.838.283.226.544.475.787.745.228.252.483.336.81.25.753-.198 1.393-.574 1.92-1.127.18-.188.354-.388.517-.608zM.002 12.825a7.35 7.35 0 003.542 5.867 13.978 13.978 0 006.183 2.06c4.606.402 8.877-.853 12.39-3.792.21-.176.413-.36.61-.55.158-.152.12-.24-.075-.316a12.636 12.636 0 00-4.434-.848c-3.155-.008-6.195.834-9.155 1.737-.87.265-1.74.52-2.63.703-.362.074-.632-.01-.84-.31a3.633 3.633 0 01-.482-1.42 12.32 12.32 0 01-.077-1.736.21.21 0 00-.21-.23H.27a.266.266 0 00-.268.253v.852z"/>
@@ -500,7 +500,7 @@
             </div>
 
             <!-- 8. AWS / Cloud -->
-            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+            <div class="group p-4 rounded-2xl glass-panel spotlight-card reveal delay-800 hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#FF9900]/40 group-hover:bg-[#FF9900]/10 group-hover:shadow-[0_0_20px_rgba(255,153,0,0.25)] transition-all duration-300">
                     <svg class="w-6 h-6 text-[#FF9900] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
@@ -516,7 +516,7 @@
          03 - ABOUT / IDENTITY SECTION (Storytelling Studio)
          ========================================================================= -->
     <section id="tentang" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-white/10 relative">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center reveal">
             <!-- Left Info (7 cols) -->
             <div class="lg:col-span-7 space-y-6">
                 <div class="inline-flex items-center space-x-2 px-3 py-1 glass-pill rounded-full text-xs font-mono text-[#34D399]">
