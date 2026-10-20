@@ -41,8 +41,9 @@
                     Mulai Diskusi Proyek
                 </a>
                 <a href="/proyek"
-                   class="w-full sm:w-auto inline-flex items-center justify-center text-[#A0ADA5] hover:text-white font-medium text-sm px-7 py-3.5 rounded-xl transition-all duration-200 border border-white/10 hover:border-white/20 hover:bg-white/[0.04]">
-                    Eksplorasi Portofolio &nearr;
+                   class="w-full sm:w-auto inline-flex items-center justify-center gap-2 whitespace-nowrap text-[#A0ADA5] hover:text-white font-medium text-sm px-7 py-3.5 rounded-xl transition-all duration-200 border border-white/10 hover:border-white/20 hover:bg-white/[0.04]">
+                    <span>Eksplorasi Portofolio</span>
+                    <span class="text-sm leading-none">&nearr;</span>
                 </a>
             </div>
 
@@ -156,8 +157,9 @@
                 <p class="text-sm text-[#A0ADA5] max-w-sm hidden lg:block">
                     Direkayasa spesifik sesuai target bisnis, bebas dari boilerplate generik, dan siap diskalakan.
                 </p>
-                <a href="/layanan" class="inline-flex items-center text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-4 py-2.5 rounded-xl transition-colors">
-                    Semua Layanan &nearr;
+                <a href="/layanan" class="inline-flex items-center gap-2 whitespace-nowrap shrink-0 text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-4 py-2.5 rounded-xl transition-colors">
+                    <span>Semua Layanan</span>
+                    <span class="text-sm leading-none">&nearr;</span>
                 </a>
             </div>
         </div>
@@ -271,8 +273,9 @@
                     </h2>
                 </div>
                 <div class="mt-6 md:mt-0">
-                    <a href="/proyek" class="inline-flex items-center text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-5 py-2.5 rounded-xl transition-colors">
-                        Eksplorasi Seluruh Portofolio &nearr;
+                    <a href="/proyek" class="inline-flex items-center gap-2 whitespace-nowrap shrink-0 text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-5 py-2.5 rounded-xl transition-colors">
+                        <span>Eksplorasi Seluruh Portofolio</span>
+                        <span class="text-sm leading-none">&nearr;</span>
                     </a>
                 </div>
             </div>
@@ -665,8 +668,9 @@
                 </p>
             </div>
             <div class="mt-6 md:mt-0">
-                <a href="/galeri" class="inline-flex items-center text-sm font-semibold text-white hover:text-[#34D399] transition-colors">
-                    Lihat Seluruh Galeri &rarr;
+                <a href="/galeri" class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-sm font-semibold text-white hover:text-[#34D399] transition-colors">
+                    <span>Lihat Seluruh Galeri</span>
+                    <span>&rarr;</span>
                 </a>
             </div>
         </div>
@@ -777,8 +781,9 @@
                 </p>
             </div>
             <div class="mt-6 md:mt-0">
-                <a href="/artikel" class="inline-flex items-center text-sm font-semibold text-white hover:text-[#34D399] transition-colors">
-                    Lihat Seluruh Artikel &rarr;
+                <a href="/artikel" class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-sm font-semibold text-white hover:text-[#34D399] transition-colors">
+                    <span>Lihat Seluruh Artikel</span>
+                    <span>&rarr;</span>
                 </a>
             </div>
         </div>
