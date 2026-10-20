@@ -1,8 +1,8 @@
 {
   "version": 2,
   "framework": null,
-  "buildCommand": "npm run build",
-  "outputDirectory": "public",
+  "buildCommand": "npm run build && mkdir -p dist && cp -r public/build public/images public/favicon.ico dist/ && rm -f dist/index.php",
+  "outputDirectory": "dist",
   "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.7.4"

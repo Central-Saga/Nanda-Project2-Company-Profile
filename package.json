@@ -5,7 +5,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "vercel-build": "vite build && mkdir -p dist && cp -r public/* dist/"
+        "vercel-build": "vite build && mkdir -p dist && cp -r public/build public/images public/favicon.ico dist/ && rm -f dist/index.php"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
