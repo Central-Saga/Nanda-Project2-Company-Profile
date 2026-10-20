@@ -22,9 +22,9 @@ $_ENV['APP_STORAGE'] = $storagePath;
 // Handle SQLite database in serverless environment
 if (getenv('DB_CONNECTION') === 'sqlite' || !getenv('DB_CONNECTION')) {
     $tmpDb = '/tmp/database.sqlite';
-    if (!file_exists($tmpDb)) {
+    if (!file_exists($tmpDb) || filesize($tmpDb) < 1000) {
         $sourceDb = __DIR__ . '/../database/database.sqlite';
-        if (file_exists($sourceDb)) {
+        if (file_exists($sourceDb) && filesize($sourceDb) > 1000) {
             copy($sourceDb, $tmpDb);
         } else {
             touch($tmpDb);
