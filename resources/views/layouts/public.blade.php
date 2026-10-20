@@ -15,23 +15,23 @@
 </head>
 <body class="bg-[#080D0B] text-[#F5F7F5] font-sans antialiased selection:bg-[#10B981] selection:text-[#080D0B] min-h-screen flex flex-col">
 
-    <!-- Translucent Sticky Navbar with Floating Island Aesthetic -->
-    <header class="sticky top-0 z-50 px-4 sm:px-6 lg:px-8 pt-4 pb-2 transition-all">
+    <!-- Translucent Sticky Navbar with Swiss Minimalist Precision -->
+    <header class="sticky top-0 z-50 px-4 sm:px-6 lg:px-8 pt-3 pb-2 transition-all">
         <div class="max-w-7xl mx-auto">
-            <div class="glass-panel rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)]">
+            <div class="rounded-2xl px-5 sm:px-7 py-3 flex items-center justify-between border border-white/[0.08] bg-[#080D0B]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
 
                 <!-- Brand / Logo -->
                 <div class="flex-shrink-0">
                     <a href="/" class="group flex items-center space-x-3 focus-visible:ring-2 focus-visible:ring-[#10B981] rounded-xl p-1 transition-all">
                         <img src="{{ asset('images/logo.png') }}"
                              alt="Logo {{ $siteProfile->company_name ?? config('app.name') }}"
-                             class="h-9 w-9 object-contain rounded-lg p-0.5 border border-white/10 bg-[#101713] group-hover:border-[#10B981]/50 group-hover:shadow-[0_0_12px_rgba(16,185,129,0.3)] transition-all">
+                             class="h-8 w-8 object-contain rounded-lg p-0.5 border border-white/10 bg-[#101713] group-hover:border-[#10B981]/50 transition-all">
                         <div class="flex flex-col">
-                            <span class="font-bold text-base tracking-tight text-white group-hover:text-[#34D399] transition-colors leading-tight">
+                            <span class="font-bold text-sm sm:text-base tracking-tight text-white group-hover:text-[#34D399] transition-colors leading-tight">
                                 {{ $siteProfile->company_name ?? config('app.name') }}
                             </span>
                             @if (!empty($siteProfile->tagline))
-                                <span class="text-[11px] text-[#A0ADA5] tracking-wide font-mono hidden sm:block">
+                                <span class="text-[11px] text-[#A0ADA5] tracking-wide font-sans hidden sm:block">
                                     {{ $siteProfile->tagline }}
                                 </span>
                             @endif
@@ -40,31 +40,31 @@
                 </div>
 
                 <!-- Desktop Navigation -->
-                <nav class="hidden md:flex items-center space-x-1 font-medium text-sm" aria-label="Navigasi Utama">
-                    <a href="/" class="px-3.5 py-2 rounded-xl transition-all {{ request()->is('/') ? 'bg-white/10 text-white font-semibold border border-white/10 shadow-inner' : 'text-[#A0ADA5] hover:text-white hover:bg-white/[0.05]' }}">
+                <nav class="hidden md:flex items-center space-x-7 font-medium text-sm" aria-label="Navigasi Utama">
+                    <a href="/" class="transition-colors {{ request()->is('/') ? 'text-white font-semibold' : 'text-[#A0ADA5] hover:text-white' }}">
                         Beranda
                     </a>
-                    <a href="/layanan" class="px-3.5 py-2 rounded-xl transition-all {{ request()->is('layanan*') ? 'bg-white/10 text-white font-semibold border border-white/10 shadow-inner' : 'text-[#A0ADA5] hover:text-white hover:bg-white/[0.05]' }}">
+                    <a href="/layanan" class="transition-colors {{ request()->is('layanan*') ? 'text-white font-semibold' : 'text-[#A0ADA5] hover:text-white' }}">
                         Layanan
                     </a>
-                    <a href="/proyek" class="px-3.5 py-2 rounded-xl transition-all {{ request()->is('proyek*') || request()->is('galeri*') ? 'bg-white/10 text-white font-semibold border border-white/10 shadow-inner' : 'text-[#A0ADA5] hover:text-white hover:bg-white/[0.05]' }}">
+                    <a href="/proyek" class="transition-colors {{ request()->is('proyek*') || request()->is('galeri*') ? 'text-white font-semibold' : 'text-[#A0ADA5] hover:text-white' }}">
                         Portofolio
                     </a>
-                    <a href="/artikel" class="px-3.5 py-2 rounded-xl transition-all {{ request()->is('artikel*') ? 'bg-white/10 text-white font-semibold border border-white/10 shadow-inner' : 'text-[#A0ADA5] hover:text-white hover:bg-white/[0.05]' }}">
+                    <a href="/artikel" class="transition-colors {{ request()->is('artikel*') ? 'text-white font-semibold' : 'text-[#A0ADA5] hover:text-white' }}">
                         Artikel
                     </a>
-                    <a href="/tentang" class="px-3.5 py-2 rounded-xl transition-all {{ request()->is('tentang*') ? 'bg-white/10 text-white font-semibold border border-white/10 shadow-inner' : 'text-[#A0ADA5] hover:text-white hover:bg-white/[0.05]' }}">
+                    <a href="/tentang" class="transition-colors {{ request()->is('tentang*') ? 'text-white font-semibold' : 'text-[#A0ADA5] hover:text-white' }}">
                         Tentang
                     </a>
-                    <a href="/kontak" class="px-3.5 py-2 rounded-xl transition-all {{ request()->is('kontak*') ? 'bg-white/10 text-white font-semibold border border-white/10 shadow-inner' : 'text-[#A0ADA5] hover:text-white hover:bg-white/[0.05]' }}">
+                    <a href="/kontak" class="transition-colors {{ request()->is('kontak*') ? 'text-white font-semibold' : 'text-[#A0ADA5] hover:text-white' }}">
                         Kontak
                     </a>
                 </nav>
 
-                <!-- Desktop CTA Button -->
+                <!-- Desktop CTA Button (Solid High-Contrast Linear Style) -->
                 <div class="hidden md:flex items-center space-x-3">
-                    <a href="/kontak" class="btn-emerald btn-shimmer inline-flex items-center justify-center min-h-[42px] px-5 py-2 text-xs sm:text-sm font-semibold rounded-xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#10B981]">
-                        Diskusikan Proyek Anda
+                    <a href="/kontak" class="bg-white hover:bg-[#F0F2F0] text-[#080D0B] font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition-all duration-200 shadow-[0_2px_12px_rgba(255,255,255,0.15)] hover:shadow-[0_4px_20px_rgba(255,255,255,0.25)] hover:-translate-y-0.5">
+                        Diskusikan Proyek
                     </a>
                 </div>
 
