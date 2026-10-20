@@ -419,36 +419,94 @@
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 text-center">
-            <div class="p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 transition-all">
-                <span class="text-sm font-bold text-white block mb-1">Laravel</span>
+            <!-- 1. Laravel -->
+            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#FF2D20]/40 group-hover:bg-[#FF2D20]/10 group-hover:shadow-[0_0_20px_rgba(255,45,32,0.25)] transition-all duration-300">
+                    <svg class="w-6 h-6 text-[#FF2D20] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8.406 3.513l8.47 4.89-8.47 4.89-8.406-4.89 8.406-4.89zm1.094 11.233v6.754l7.375-4.258v-6.754l-7.375 4.258zm-2.188 0l-7.312-4.258v6.754l7.312 4.258v-6.754zm10.562-3.832l4.126-2.382v-3.793l-4.126 2.382v3.793zm1.094-7.051l3.032 1.75 3.032-1.75-3.032-1.75-3.032 1.75zm5.156 3.258v3.793l4.126-2.382v-3.793l-4.126 2.382z"/>
+                    </svg>
+                </div>
+                <span class="text-sm font-bold text-white block mb-0.5 group-hover:text-[#34D399] transition-colors">Laravel</span>
                 <span class="text-[10px] font-mono text-[#A0ADA5]">Backend Core</span>
             </div>
-            <div class="p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 transition-all">
-                <span class="text-sm font-bold text-white block mb-1">PHP 8.3+</span>
+
+            <!-- 2. PHP 8.3+ -->
+            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#777BB4]/40 group-hover:bg-[#777BB4]/10 group-hover:shadow-[0_0_20px_rgba(119,123,180,0.25)] transition-all duration-300">
+                    <svg class="w-6 h-6 text-[#777BB4] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-5.7 13.5h-1.8l1.4-7h3c1.8 0 2.8.9 2.6 2.3-.2 1.6-1.7 2.7-3.4 2.7H7.1l-.8 2zm5.5 0h-1.8l1.4-7h1.8l-.6 3.1h1.8c1.8 0 2.8.9 2.6 2.3-.3 1.6-1.8 2.7-3.5 2.7h-1.5l-.4 1.9zm8.2-5c-.2 1.6-1.7 2.7-3.4 2.7H15l-.4 2.3h-1.8l1.4-7h3c1.8 0 2.8.9 2.8 2z"/>
+                    </svg>
+                </div>
+                <span class="text-sm font-bold text-white block mb-0.5 group-hover:text-[#34D399] transition-colors">PHP 8.3+</span>
                 <span class="text-[10px] font-mono text-[#A0ADA5]">Engine</span>
             </div>
-            <div class="p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 transition-all">
-                <span class="text-sm font-bold text-white block mb-1">PostgreSQL</span>
+
+            <!-- 3. PostgreSQL -->
+            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#336791]/40 group-hover:bg-[#336791]/10 group-hover:shadow-[0_0_20px_rgba(51,103,145,0.25)] transition-all duration-300">
+                    <svg class="w-6 h-6 text-[#4169E1] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm5.8 13.4c-.4.8-1 1.4-1.8 1.8a5 5 0 0 1-2.4.6 4.9 4.9 0 0 1-3.6-1.5 5.5 5.5 0 0 1-1.4-3.8c0-1.6.5-2.9 1.5-4a5.2 5.2 0 0 1 3.8-1.6c1.3 0 2.4.4 3.3 1.2a5.4 5.4 0 0 1 1.7 3.3h-2.1a3.5 3.5 0 0 0-1-2 3.1 3.1 0 0 0-2-.7 3.2 3.2 0 0 0-2.4 1 4.1 4.1 0 0 0-.9 2.7 4.1 4.1 0 0 0 .9 2.8 3.1 3.1 0 0 0 2.4 1 3 3 0 0 0 2.1-.8 3.6 3.6 0 0 0 1-2.1h-3.1v-1.7h5.2v3.7z"/>
+                    </svg>
+                </div>
+                <span class="text-sm font-bold text-white block mb-0.5 group-hover:text-[#34D399] transition-colors">PostgreSQL</span>
                 <span class="text-[10px] font-mono text-[#A0ADA5]">Relational DB</span>
             </div>
-            <div class="p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 transition-all">
-                <span class="text-sm font-bold text-white block mb-1">Tailwind 4</span>
+
+            <!-- 4. Tailwind 4 -->
+            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#38BDF8]/40 group-hover:bg-[#38BDF8]/10 group-hover:shadow-[0_0_20px_rgba(56,189,248,0.25)] transition-all duration-300">
+                    <svg class="w-6 h-6 text-[#38BDF8] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/>
+                    </svg>
+                </div>
+                <span class="text-sm font-bold text-white block mb-0.5 group-hover:text-[#34D399] transition-colors">Tailwind 4</span>
                 <span class="text-[10px] font-mono text-[#A0ADA5]">Design Engine</span>
             </div>
-            <div class="p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 transition-all">
-                <span class="text-sm font-bold text-white block mb-1">Vue / React</span>
+
+            <!-- 5. Vue / React -->
+            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#61DAFB]/40 group-hover:bg-[#61DAFB]/10 group-hover:shadow-[0_0_20px_rgba(97,218,251,0.25)] transition-all duration-300">
+                    <svg class="w-6 h-6 text-[#61DAFB] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <circle cx="12" cy="12" r="2.2" fill="currentColor"/>
+                        <ellipse cx="12" cy="12" rx="10" ry="4"/>
+                        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/>
+                        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>
+                    </svg>
+                </div>
+                <span class="text-sm font-bold text-white block mb-0.5 group-hover:text-[#34D399] transition-colors">Vue / React</span>
                 <span class="text-[10px] font-mono text-[#A0ADA5]">SPA / Dynamic UI</span>
             </div>
-            <div class="p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 transition-all">
-                <span class="text-sm font-bold text-white block mb-1">Flutter</span>
+
+            <!-- 6. Flutter -->
+            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#02569B]/40 group-hover:bg-[#02569B]/10 group-hover:shadow-[0_0_20px_rgba(2,86,155,0.25)] transition-all duration-300">
+                    <svg class="w-6 h-6 text-[#54C5F8] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14.314 0L2.3 12 6 15.7 21.684 0zm.014 11.072L7.857 17.543 14.328 24H21.7l-6.471-6.457 6.471-6.471z"/>
+                    </svg>
+                </div>
+                <span class="text-sm font-bold text-white block mb-0.5 group-hover:text-[#34D399] transition-colors">Flutter</span>
                 <span class="text-[10px] font-mono text-[#A0ADA5]">Cross-Platform</span>
             </div>
-            <div class="p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 transition-all">
-                <span class="text-sm font-bold text-white block mb-1">Docker</span>
+
+            <!-- 7. Docker -->
+            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#2496ED]/40 group-hover:bg-[#2496ED]/10 group-hover:shadow-[0_0_20px_rgba(36,150,237,0.25)] transition-all duration-300">
+                    <svg class="w-6 h-6 text-[#2496ED] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.186.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.186.186.186m5.893 2.715h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186h-2.119a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185m-2.928 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186H2.208a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185M23.97 11.23a8.91 8.91 0 00-3.69-5.188l-.348-.22-.245.333a5.534 5.534 0 01-2.905 1.956c-.23.056-.279.16-.273.395.034 1.25-.422 1.99-1.284 2.502l-.248.147.28.077c1.37.378 2.656.974 3.738 1.838.283.226.544.475.787.745.228.252.483.336.81.25.753-.198 1.393-.574 1.92-1.127.18-.188.354-.388.517-.608zM.002 12.825a7.35 7.35 0 003.542 5.867 13.978 13.978 0 006.183 2.06c4.606.402 8.877-.853 12.39-3.792.21-.176.413-.36.61-.55.158-.152.12-.24-.075-.316a12.636 12.636 0 00-4.434-.848c-3.155-.008-6.195.834-9.155 1.737-.87.265-1.74.52-2.63.703-.362.074-.632-.01-.84-.31a3.633 3.633 0 01-.482-1.42 12.32 12.32 0 01-.077-1.736.21.21 0 00-.21-.23H.27a.266.266 0 00-.268.253v.852z"/>
+                    </svg>
+                </div>
+                <span class="text-sm font-bold text-white block mb-0.5 group-hover:text-[#34D399] transition-colors">Docker</span>
                 <span class="text-[10px] font-mono text-[#A0ADA5]">Containers</span>
             </div>
-            <div class="p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 transition-all">
-                <span class="text-sm font-bold text-white block mb-1">AWS / Cloud</span>
+
+            <!-- 8. AWS / Cloud -->
+            <div class="group p-4 rounded-2xl glass-panel hover:border-[#10B981]/50 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 mb-3 group-hover:border-[#FF9900]/40 group-hover:bg-[#FF9900]/10 group-hover:shadow-[0_0_20px_rgba(255,153,0,0.25)] transition-all duration-300">
+                    <svg class="w-6 h-6 text-[#FF9900] group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
+                    </svg>
+                </div>
+                <span class="text-sm font-bold text-white block mb-0.5 group-hover:text-[#34D399] transition-colors">AWS / Cloud</span>
                 <span class="text-[10px] font-mono text-[#A0ADA5]">Infra &amp; CDN</span>
             </div>
         </div>
