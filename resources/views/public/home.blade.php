@@ -99,15 +99,27 @@
     </section>
 
     <!-- =========================================================================
-         01.1 - SWISS EDITORIAL METRICS GRID (Zero AI Card Slop)
+         01.1 - SWISS EDITORIAL METRICS GRID (Track Record & Rekam Jejak)
          ========================================================================= -->
     @php
-        $statsData = $siteProfile->stats ?? [
-            ['label' => 'Proyek Terselesaikan', 'value' => '45+'],
-            ['label' => 'Tingkat Kepuasan Klien', 'value' => '99.4%'],
-            ['label' => 'Ketersediaan Sistem SLA', 'value' => '99.9%'],
-            ['label' => 'Tahun Rekayasa Digital', 'value' => '5+ Tahun'],
-        ];
+        $rawStats = $siteProfile->stats ?? [];
+        if (isset($rawStats['projects_completed']) || isset($rawStats['years_experience'])) {
+            $statsData = [
+                ['label' => 'Proyek Terselesaikan', 'value' => $rawStats['projects_completed'] ?? '45+'],
+                ['label' => 'Tahun Pengalaman Rekayasa', 'value' => $rawStats['years_experience'] ?? '6+'],
+                ['label' => 'Tingkat Kepuasan Klien', 'value' => $rawStats['client_satisfaction'] ?? '99%'],
+                ['label' => 'Core Software Engineers', 'value' => $rawStats['core_engineers'] ?? '12'],
+            ];
+        } elseif (is_array($rawStats) && count($rawStats) > 0 && isset($rawStats[0]['label'])) {
+            $statsData = $rawStats;
+        } else {
+            $statsData = [
+                ['label' => 'Proyek Terselesaikan', 'value' => '45+'],
+                ['label' => 'Tahun Pengalaman Rekayasa', 'value' => '6+'],
+                ['label' => 'Tingkat Kepuasan Klien', 'value' => '99%'],
+                ['label' => 'Core Software Engineers', 'value' => '12'],
+            ];
+        }
     @endphp
     <section class="border-b border-white/[0.08] bg-[#070B09]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
