@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    --color-bg-main: #080D0B;
+    --color-bg-surface: #101713;
+    --color-bg-surface-elevated: #16201A;
+    --color-border-subtle: rgba(255, 255, 255, 0.10);
+    --color-border-hover: rgba(16, 185, 129, 0.40);
+
+    --color-primary-green: #10B981;
+    --color-accent-green: #34D399;
+    --color-emerald-deep: #064E3B;
+
+    --color-gold: #D4AF37;
+    --color-gold-hover: #E5C378;
+
+    --color-primary-text: #F5F7F5;
+    --color-secondary-text: #A0ADA5;
+}
+
+:root {
+    --c-bg-main: #080D0B;
+    --c-bg-surface: #101713;
+    --c-bg-surface-elevated: #16201A;
+    --c-border: rgba(255, 255, 255, 0.10);
+    --c-border-hover: rgba(16, 185, 129, 0.40);
+    --c-primary-green: #10B981;
+    --c-accent-green: #34D399;
+    --c-primary-text: #F5F7F5;
+    --c-secondary-text: #A0ADA5;
+    --c-gold: #D4AF37;
+}
+
+body {
+    background-color: var(--c-bg-main);
+    color: var(--c-primary-text);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle Ambient Glow for Agency Atmosphere */
+.bg-ambient-mesh {
+    background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(16, 185, 129, 0.16), transparent 70%),
+        radial-gradient(circle 500px at 90% 20%, rgba(52, 211, 153, 0.08), transparent 60%),
+        radial-gradient(circle 450px at 10% 50%, rgba(13, 92, 58, 0.12), transparent 60%),
+        #080D0B;
+}
+
+/* Modern Frosted Glass Panel */
+.glass-panel {
+    background: rgba(16, 23, 19, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+    border-color: rgba(16, 185, 129, 0.35);
+    box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.5), 0 0 24px -6px rgba(16, 185, 129, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Translucent Minimalist Glass Pill */
+.glass-pill {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    transition: all 0.2s ease;
+}
+
+.glass-pill:hover {
+    border-color: rgba(16, 185, 129, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Premium Primary Button */
+.btn-emerald {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: #FFFFFF;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-emerald:hover {
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+    box-shadow: 0 6px 24px rgba(16, 185, 129, 0.40);
+    transform: translateY(-1px);
+}
+
+/* Secondary Ghost Button */
+.btn-secondary-glass {
+    background: rgba(255, 255, 255, 0.05);
+    color: #F5F7F5;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.2s ease;
+}
+
+.btn-secondary-glass:hover {
+    background: rgba(255, 255, 255, 0.10);
+    border-color: rgba(16, 185, 129, 0.40);
+    color: #34D399;
+}
+
+:focus-visible {
+    outline: 2px solid var(--c-primary-green);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
