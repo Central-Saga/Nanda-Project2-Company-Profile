@@ -41,9 +41,8 @@
                     Mulai Diskusi Proyek
                 </a>
                 <a href="/proyek"
-                   class="w-full sm:w-auto inline-flex items-center justify-center gap-2 whitespace-nowrap text-[#A0ADA5] hover:text-white font-medium text-sm px-7 py-3.5 rounded-xl transition-all duration-200 border border-white/10 hover:border-white/20 hover:bg-white/[0.04]">
-                    <span>Eksplorasi Portofolio</span>
-                    <span class="text-sm leading-none">&nearr;</span>
+                   class="w-full sm:w-auto inline-flex items-center justify-center whitespace-nowrap text-[#A0ADA5] hover:text-white font-medium text-sm px-7 py-3.5 rounded-xl transition-all duration-200 border border-white/10 hover:border-white/20 hover:bg-white/[0.04]">
+                    Eksplorasi Portofolio
                 </a>
             </div>
 
@@ -157,9 +156,8 @@
                 <p class="text-sm text-[#A0ADA5] max-w-sm hidden lg:block">
                     Direkayasa spesifik sesuai target bisnis, bebas dari boilerplate generik, dan siap diskalakan.
                 </p>
-                <a href="/layanan" class="inline-flex items-center gap-2 whitespace-nowrap shrink-0 text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-4 py-2.5 rounded-xl transition-colors">
-                    <span>Semua Layanan</span>
-                    <span class="text-sm leading-none">&nearr;</span>
+                <a href="/layanan" class="inline-flex items-center whitespace-nowrap shrink-0 text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-4 py-2.5 rounded-xl transition-colors">
+                    Semua Layanan
                 </a>
             </div>
         </div>
@@ -217,7 +215,7 @@
                         <div class="rounded-xl border border-white/10 bg-[#080D0B] p-4 text-xs font-mono text-[#A0ADA5] flex items-center justify-between">
                             <span class="text-[#34D399]">Arsitektur: Microservices &bull; Headless API &bull; SSR</span>
                             <a href="/layanan/{{ $flagshipService->slug }}" class="text-white hover:underline">
-                                Pelajari Spesifikasi &rarr;
+                                Pelajari Spesifikasi
                             </a>
                         </div>
                     </div>
@@ -248,7 +246,7 @@
                             <div class="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-[#A0ADA5]">
                                 <span>KONSULTASI GRATIS</span>
                                 <a href="/layanan/{{ $secService->slug }}" class="text-[#34D399] hover:underline">
-                                    Rincian Modul &rarr;
+                                    Rincian Modul
                                 </a>
                             </div>
                         </div>
@@ -273,9 +271,8 @@
                     </h2>
                 </div>
                 <div class="mt-6 md:mt-0">
-                    <a href="/proyek" class="inline-flex items-center gap-2 whitespace-nowrap shrink-0 text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-5 py-2.5 rounded-xl transition-colors">
-                        <span>Eksplorasi Seluruh Portofolio</span>
-                        <span class="text-sm leading-none">&nearr;</span>
+                    <a href="/proyek" class="inline-flex items-center whitespace-nowrap shrink-0 text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-4 py-2.5 rounded-xl transition-colors">
+                        Semua Portofolio
                     </a>
                 </div>
             </div>
@@ -348,7 +345,7 @@
 
                             <div class="pt-6 border-t border-white/10 flex items-center justify-between">
                                 <a href="/proyek/{{ $heroProject->slug }}" class="text-sm font-semibold text-white hover:text-[#34D399] transition-colors inline-flex items-center">
-                                    Baca Studi Kasus Selengkapnya &rarr;
+                                    Baca Studi Kasus
                                 </a>
                                 @if (!empty($heroProject->external_url))
                                     <a href="{{ $heroProject->external_url }}" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-[#A0ADA5] hover:text-white underline">
@@ -403,7 +400,7 @@
 
                             <div class="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono">
                                 <a href="/proyek/{{ $proj->slug }}" class="text-[#10B981] group-hover:text-[#34D399] font-semibold">
-                                    Studi Kasus &rarr;
+                                    Studi Kasus
                                 </a>
                                 @if (!empty($proj->external_url))
                                     <a href="{{ $proj->external_url }}" target="_blank" rel="noopener noreferrer" class="text-[#A0ADA5] hover:text-white underline">
@@ -611,7 +608,7 @@
 
                 <div class="pt-2">
                     <a href="/tentang" class="inline-flex items-center text-sm font-semibold text-white hover:text-[#34D399] transition-colors">
-                        Baca Selengkapnya Profil &amp; Nilai Perusahaan &rarr;
+                        Profil &amp; Nilai Perusahaan
                     </a>
                 </div>
             </div>
@@ -668,9 +665,8 @@
                 </p>
             </div>
             <div class="mt-6 md:mt-0">
-                <a href="/galeri" class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-sm font-semibold text-white hover:text-[#34D399] transition-colors">
-                    <span>Lihat Seluruh Galeri</span>
-                    <span>&rarr;</span>
+                <a href="/galeri" class="inline-flex items-center whitespace-nowrap shrink-0 text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-4 py-2.5 rounded-xl transition-colors">
+                    Semua Galeri
                 </a>
             </div>
         </div>
@@ -700,7 +696,7 @@
                                 <h3 class="text-sm font-bold text-white truncate group-hover:text-[#34D399] transition-colors">
                                     {{ $gallery->title }}
                                 </h3>
-                                <span class="text-[11px] font-mono text-[#A0ADA5] uppercase tracking-wider">DETAIL &nearr;</span>
+                                <span class="text-[11px] font-mono text-[#A0ADA5] uppercase tracking-wider">DETAIL</span>
                             </div>
                         @endif
                     </div>
@@ -781,9 +777,8 @@
                 </p>
             </div>
             <div class="mt-6 md:mt-0">
-                <a href="/artikel" class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-sm font-semibold text-white hover:text-[#34D399] transition-colors">
-                    <span>Lihat Seluruh Artikel</span>
-                    <span>&rarr;</span>
+                <a href="/artikel" class="inline-flex items-center whitespace-nowrap shrink-0 text-xs font-mono text-white bg-white/10 hover:bg-white/15 px-4 py-2.5 rounded-xl transition-colors">
+                    Semua Artikel
                 </a>
             </div>
         </div>
@@ -835,7 +830,7 @@
                                 {{ $article->author->name ?? 'Tim Studio' }}
                             </span>
                             <a href="/artikel/{{ $article->slug }}" class="font-semibold text-white group-hover:text-[#34D399] transition-colors">
-                                Baca Artikel &rarr;
+                                Baca Artikel
                             </a>
                         </div>
                     </article>
@@ -888,7 +883,7 @@
 
                 <div class="pt-2">
                     <a href="/kontak" class="inline-flex items-center text-sm font-semibold text-[#34D399] hover:underline">
-                        Buka Formulir Inquiry Proyek Lengkap &rarr;
+                        Buka Formulir Inquiry Proyek Lengkap
                     </a>
                 </div>
             </div>
@@ -997,9 +992,8 @@
                     <!-- Tombol Kirim -->
                     <div class="pt-2">
                         <button type="submit"
-                                class="w-full min-h-[48px] px-6 py-3.5 text-sm font-semibold text-[#080D0B] bg-white hover:bg-[#F0F2F0] rounded-xl flex items-center justify-center space-x-2 transition-all shadow-[0_4px_20px_rgba(255,255,255,0.15)]">
-                            <span>Kirimkan Pesan Anda</span>
-                            <span>&rarr;</span>
+                                class="w-full min-h-[48px] px-6 py-3.5 text-sm font-semibold text-[#080D0B] bg-white hover:bg-[#F0F2F0] rounded-xl flex items-center justify-center transition-all shadow-[0_4px_20px_rgba(255,255,255,0.15)]">
+                            Kirimkan Pesan Anda
                         </button>
                     </div>
                 </form>
