@@ -1,0 +1,1244 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ----------------------------------------------------
+// ENUMS
+// ----------------------------------------------------
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  EXPORT
+}
+
+enum TechCategory {
+  frontend
+  backend
+  mobile
+  database
+  cloud
+  ai
+  tools
+}
+
+enum ContentStatus {
+  placeholder
+  draft
+  verified
+}
+
+enum MediaType {
+  image
+  video
+}
+
+enum TestimonialStatus {
+  pending
+  approved
+  hidden
+}
+
+enum SubmittedVia {
+  admin
+  public_form
+}
+
+enum AwardType {
+  certification
+  award
+  partnership
+}
+
+enum FaqCategory {
+  general
+  pricing
+  process
+  technical
+  career
+}
+
+enum PostStatus {
+  draft
+  published
+}
+
+enum LeadSourceType {
+  contact_form
+  project_brief
+  newsletter
+  event
+}
+
+enum LeadStatus {
+  new
+  contacted
+  qualified
+  proposal
+  won
+  lost
+  spam
+}
+
+enum LeadPriority {
+  low
+  medium
+  high
+}
+
+enum ReadStatus {
+  unread
+  read
+}
+
+enum FollowUpStatus {
+  none
+  in_progress
+  done
+}
+
+enum ProjectType {
+  web
+  mobile
+  enterprise
+  uiux
+  ai
+  other
+}
+
+enum SubscriberStatus {
+  pending
+  subscribed
+  unsubscribed
+}
+
+enum EmploymentType {
+  full_time
+  part_time
+  contract
+  internship
+}
+
+enum WorkMode {
+  onsite
+  hybrid
+  remote
+}
+
+enum JobOpeningStatus {
+  draft
+  open
+  closed
+}
+
+enum ApplicationStatus {
+  new
+  screening
+  interview
+  offer
+  hired
+  rejected
+  withdrawn
+}
+
+enum MenuLocation {
+  header
+  footer
+}
+
+enum ThemePolicy {
+  light
+  dark
+  toggle
+}
+
+enum DesignDirectionStatus {
+  missing
+  draft_without_direction
+  approved
+}
+
+enum DesignDecisionArea {
+  color
+  layout
+  typography
+  spacing
+  cards
+  icon
+  illustration
+  animation
+  gradient
+  shadow
+  other
+}
+
+enum DeliveryGateBlock {
+  hard_gate
+  purpose_gate
+  liveliness
+  craftsmanship
+}
+
+enum GateReportStatus {
+  pass
+  fail
+  not_applicable
+}
+
+enum BookingStatus {
+  pending
+  confirmed
+  done
+  cancelled
+}
+
+// ----------------------------------------------------
+// ACCESS & SECURITY (E3.1)
+// ----------------------------------------------------
+
+model Role {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique @db.VarChar(50)
+  description String?  @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  users           User[]
+  rolePermissions RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id        String   @id @default(uuid()) @db.Uuid
+  action    String   @db.VarChar(50)
+  subject   String   @db.VarChar(50)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  rolePermissions RolePermission[]
+
+  @@unique([action, subject])
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String     @map("role_id") @db.Uuid
+  permissionId String     @map("permission_id") @db.Uuid
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model User {
+  id                 String    @id @default(uuid()) @db.Uuid
+  roleId             String    @map("role_id") @db.Uuid
+  fullName           String    @map("full_name") @db.VarChar(150)
+  email              String    @unique @db.VarChar(190)
+  passwordHash       String    @map("password_hash") @db.VarChar(255)
+  avatarMediaId      String?   @map("avatar_media_id") @db.Uuid
+  twoFactorSecret    String?   @map("two_factor_secret") @db.VarChar(255)
+  twoFactorEnabled   Boolean   @default(false) @map("two_factor_enabled")
+  isActive           Boolean   @default(true) @map("is_active")
+  mustChangePassword Boolean   @default(true) @map("must_change_password")
+  passwordChangedAt  DateTime? @map("password_changed_at") @db.Timestamptz
+  failedLoginCount   Int       @default(0) @map("failed_login_count")
+  lockedUntil        DateTime? @map("locked_until") @db.Timestamptz
+  lastLoginAt        DateTime? @map("last_login_at") @db.Timestamptz
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt          DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  deletedAt          DateTime? @map("deleted_at") @db.Timestamptz
+
+  role        Role        @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  avatarMedia MediaFile?  @relation("UserAvatar", fields: [avatarMediaId], references: [id], onDelete: SetNull)
+
+  sessions                 Session[]
+  auditLogs                AuditLog[]
+  mediaFilesUploaded       MediaFile[]                @relation("MediaUploadedBy")
+  postsAuthored            Post[]                     @relation("PostAuthor")
+  jobOpeningsCreated       JobOpening[]               @relation("JobOpeningAuthor")
+  leadNotesCreated         LeadNote[]
+  leadsAssigned            Lead[]                     @relation("LeadAssignedUser")
+  leadStatusChanges        LeadStatusHistory[]        @relation("LeadStatusChangedBy")
+  applicationStatusChanges ApplicationStatusHistory[] @relation("AppStatusChangedBy")
+  contactMessagesRead      ContactMessage[]           @relation("ContactMessageReadBy")
+  consultationBookingsHandled ConsultationBooking[]   @relation("BookingHandledBy")
+  testimonialsModerated    Testimonial[]              @relation("TestimonialModerator")
+  galleryItemsCreated      GalleryItem[]              @relation("GalleryItemCreatedBy")
+  companyProfileUpdated    CompanyProfile[]           @relation("CompanyProfileUpdatedBy")
+  siteSettingsUpdated      SiteSetting[]              @relation("SiteSettingUpdatedBy")
+  designDecisionsCreated   DesignDecision[]           @relation("DesignDecisionCreatedBy")
+  designDirectionsApproved DesignDirection[]          @relation("DesignDirectionApprovedBy")
+  gateReportsChecked       DeliveryGateReport[]       @relation("GateReportCheckedBy")
+
+  @@map("users")
+}
+
+model Session {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  tokenHash String    @map("token_hash") @db.VarChar(255)
+  ipAddress String?   @map("ip_address") @db.VarChar(45)
+  userAgent String?   @map("user_agent") @db.Text
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model AuditLog {
+  id         String      @id @default(uuid()) @db.Uuid
+  userId     String?     @map("user_id") @db.Uuid
+  action     AuditAction
+  entityType String      @map("entity_type") @db.VarChar(100)
+  entityId   String?     @map("entity_id") @db.VarChar(100)
+  oldValues  Json?       @map("old_values")
+  newValues  Json?       @map("new_values")
+  ipAddress  String?     @map("ip_address") @db.VarChar(45)
+  userAgent  String?     @map("user_agent") @db.Text
+  createdAt  DateTime    @default(now()) @map("created_at") @db.Timestamptz
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// ----------------------------------------------------
+// CORE CONTENT (E3.2 + C7.2)
+// ----------------------------------------------------
+
+model CompanyProfile {
+  id             String    @id @default(uuid()) @db.Uuid
+  companyName    String    @map("company_name") @db.VarChar(150)
+  tagline        String?   @db.VarChar(255)
+  aboutShort     String?   @map("about_short") @db.Text
+  address        String?   @db.Text
+  phone          String?   @db.VarChar(50)
+  emailPublic    String?   @map("email_public") @db.VarChar(190)
+  operatingHours Json?     @map("operating_hours")
+  socialLinks    Json?     @map("social_links")
+  logoMediaId    String?   @map("logo_media_id") @db.Uuid
+  updatedBy      String?   @map("updated_by") @db.Uuid
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  logoMedia MediaFile? @relation("CompanyProfileLogo", fields: [logoMediaId], references: [id], onDelete: SetNull)
+  updater   User?      @relation("CompanyProfileUpdatedBy", fields: [updatedBy], references: [id], onDelete: SetNull)
+
+  @@map("company_profile")
+}
+
+model Service {
+  id           String    @id @default(uuid()) @db.Uuid
+  slug         String    @unique @db.VarChar(150)
+  icon         String?   @db.VarChar(100)
+  coverMediaId String?   @map("cover_media_id") @db.Uuid
+  sortOrder    Int       @default(0) @map("sort_order")
+  isPublished  Boolean   @default(false) @map("is_published")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  deletedAt    DateTime? @map("deleted_at") @db.Timestamptz
+
+  coverMedia   MediaFile?           @relation("ServiceCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
+  translations ServiceTranslation[]
+  projects     ProjectService[]
+  faqs         Faq[]
+
+  @@map("services")
+}
+
+model ServiceTranslation {
+  id           String  @id @default(uuid()) @db.Uuid
+  serviceId    String  @map("service_id") @db.Uuid
+  locale       String  @db.VarChar(5)
+  name         String  @db.VarChar(200)
+  tagline      String? @db.VarChar(255)
+  summary      String? @db.Text
+  description  String? @db.Text
+  benefits     Json?
+  deliverables Json?
+  processSteps Json?   @map("process_steps")
+  faqJson      Json?   @map("faq_json")
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceId, locale])
+  @@map("service_translations")
+}
+
+model Industry {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique @db.VarChar(100)
+  icon      String?  @db.VarChar(100)
+  sortOrder Int      @default(0) @map("sort_order")
+
+  translations IndustryTranslation[]
+  clients      Client[]
+  projects     Project[]
+
+  @@map("industries")
+}
+
+model IndustryTranslation {
+  id          String  @id @default(uuid()) @db.Uuid
+  industryId  String  @map("industry_id") @db.Uuid
+  locale      String  @db.VarChar(5)
+  name        String  @db.VarChar(150)
+  description String? @db.Text
+
+  industry Industry @relation(fields: [industryId], references: [id], onDelete: Cascade)
+
+  @@unique([industryId, locale])
+  @@map("industry_translations")
+}
+
+model Technology {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String       @db.VarChar(100)
+  slug        String       @unique @db.VarChar(100)
+  category    TechCategory
+  logoMediaId String?      @map("logo_media_id") @db.Uuid
+  websiteUrl  String?      @map("website_url") @db.VarChar(255)
+  sortOrder   Int          @default(0) @map("sort_order")
+  isFeatured  Boolean      @default(false) @map("is_featured")
+
+  logoMedia MediaFile?           @relation("TechLogo", fields: [logoMediaId], references: [id], onDelete: SetNull)
+  projects  ProjectTechnology[]
+
+  @@map("technologies")
+}
+
+model Client {
+  id                String   @id @default(uuid()) @db.Uuid
+  name              String   @db.VarChar(150)
+  slug              String   @unique @db.VarChar(150)
+  logoMediaId       String?  @map("logo_media_id") @db.Uuid
+  websiteUrl        String?  @map("website_url") @db.VarChar(255)
+  industryId        String?  @map("industry_id") @db.Uuid
+  isNamePublic      Boolean  @default(true) @map("is_name_public")
+  logoUsageConsent  Boolean  @default(false) @map("logo_usage_consent")
+  isFeatured        Boolean  @default(false) @map("is_featured")
+  sortOrder         Int      @default(0) @map("sort_order")
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  logoMedia    MediaFile?    @relation("ClientLogo", fields: [logoMediaId], references: [id], onDelete: SetNull)
+  industry     Industry?     @relation(fields: [industryId], references: [id], onDelete: SetNull)
+  projects     Project[]
+  testimonials Testimonial[]
+
+  @@map("clients")
+}
+
+model Project {
+  id             String        @id @default(uuid()) @db.Uuid
+  slug           String        @unique @db.VarChar(180)
+  clientId       String?       @map("client_id") @db.Uuid
+  industryId     String?       @map("industry_id") @db.Uuid
+  coverMediaId   String?       @map("cover_media_id") @db.Uuid
+  projectUrl     String?       @map("project_url") @db.VarChar(255)
+  startedAt      DateTime?     @map("started_at") @db.Date
+  completedAt    DateTime?     @map("completed_at") @db.Date
+  durationMonths Int?          @map("duration_months") @db.SmallInt
+  teamSize       Int?          @map("team_size") @db.SmallInt
+  contentStatus  ContentStatus @default(placeholder) @map("content_status")
+  isFeatured     Boolean       @default(false) @map("is_featured")
+  isPublished    Boolean       @default(false) @map("is_published")
+  publishedAt    DateTime?     @map("published_at") @db.Timestamptz
+  sortOrder      Int           @default(0) @map("sort_order")
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz
+  deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz
+
+  client       Client?              @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  industry     Industry?            @relation(fields: [industryId], references: [id], onDelete: SetNull)
+  coverMedia   MediaFile?           @relation("ProjectCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
+  translations ProjectTranslation[]
+  services     ProjectService[]
+  technologies ProjectTechnology[]
+  media        ProjectMedia[]
+  metrics      ProjectMetric[]
+  testimonials Testimonial[]
+
+  @@index([isPublished, isFeatured, sortOrder])
+  @@map("projects")
+}
+
+model ProjectTranslation {
+  id        String  @id @default(uuid()) @db.Uuid
+  projectId String  @map("project_id") @db.Uuid
+  locale    String  @db.VarChar(5)
+  title     String  @db.VarChar(200)
+  summary   String? @db.Text
+  challenge String? @db.Text
+  solution  String? @db.Text
+  result    String? @db.Text
+  content   String? @db.Text
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, locale])
+  @@map("project_translations")
+}
+
+model ProjectService {
+  projectId String  @map("project_id") @db.Uuid
+  serviceId String  @map("service_id") @db.Uuid
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, serviceId])
+  @@map("project_services")
+}
+
+model ProjectTechnology {
+  projectId    String     @map("project_id") @db.Uuid
+  technologyId String     @map("technology_id") @db.Uuid
+  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  technology   Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, technologyId])
+  @@map("project_technologies")
+}
+
+model ProjectMedia {
+  id        String    @id @default(uuid()) @db.Uuid
+  projectId String    @map("project_id") @db.Uuid
+  mediaId   String    @map("media_id") @db.Uuid
+  type      MediaType @default(image)
+  caption   String?   @db.Text
+  sortOrder Int       @default(0) @map("sort_order")
+
+  project Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  media   MediaFile @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@map("project_media")
+}
+
+model ProjectMetric {
+  id                String  @id @default(uuid()) @db.Uuid
+  projectId         String  @map("project_id") @db.Uuid
+  label             String  @db.VarChar(100)
+  value             String  @db.VarChar(50)
+  sourceDescription String  @map("source_description") @db.Text
+  sourceUrl         String? @map("source_url") @db.VarChar(500)
+  isVerified        Boolean @default(false) @map("is_verified")
+  sortOrder         Int     @default(0) @map("sort_order")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, isVerified])
+  @@map("project_metrics")
+}
+
+model Testimonial {
+  id                     String            @id @default(uuid()) @db.Uuid
+  clientId               String?           @map("client_id") @db.Uuid
+  projectId              String?           @map("project_id") @db.Uuid
+  authorName             String            @map("author_name") @db.VarChar(150)
+  authorTitle            String?           @map("author_title") @db.VarChar(150)
+  authorCompany          String?           @map("author_company") @db.VarChar(150)
+  authorPhotoMediaId     String?           @map("author_photo_media_id") @db.Uuid
+  rating                 Int?              @db.SmallInt
+  status                 TestimonialStatus @default(pending)
+  submittedVia           SubmittedVia      @default(admin) @map("submitted_via")
+  moderatedBy            String?           @map("moderated_by") @db.Uuid
+  moderatedAt            DateTime?         @map("moderated_at") @db.Timestamptz
+  isVerified             Boolean           @default(false) @map("is_verified")
+  consentDocumentMediaId String?           @map("consent_document_media_id") @db.Uuid
+  verificationNote       String?           @map("verification_note") @db.Text
+  isPublished            Boolean           @default(false) @map("is_published")
+  sortOrder              Int               @default(0) @map("sort_order")
+  createdAt              DateTime          @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt              DateTime          @updatedAt @map("updated_at") @db.Timestamptz
+
+  client          Client?                  @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  project         Project?                 @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  authorPhoto     MediaFile?               @relation("TestimonialAuthorPhoto", fields: [authorPhotoMediaId], references: [id], onDelete: SetNull)
+  consentDocument MediaFile?               @relation("TestimonialConsentDoc", fields: [consentDocumentMediaId], references: [id], onDelete: SetNull)
+  moderator       User?                    @relation("TestimonialModerator", fields: [moderatedBy], references: [id], onDelete: SetNull)
+  translations    TestimonialTranslation[]
+
+  @@index([isVerified, isPublished])
+  @@map("testimonials")
+}
+
+model TestimonialTranslation {
+  id            String @id @default(uuid()) @db.Uuid
+  testimonialId String @map("testimonial_id") @db.Uuid
+  locale        String @db.VarChar(5)
+  content       String @db.Text
+
+  testimonial Testimonial @relation(fields: [testimonialId], references: [id], onDelete: Cascade)
+
+  @@unique([testimonialId, locale])
+  @@map("testimonial_translations")
+}
+
+model TeamMember {
+  id           String   @id @default(uuid()) @db.Uuid
+  fullName     String   @map("full_name") @db.VarChar(150)
+  photoMediaId String?  @map("photo_media_id") @db.Uuid
+  photoIsReal  Boolean  @default(false) @map("photo_is_real")
+  linkedinUrl  String?  @map("linkedin_url") @db.VarChar(255)
+  githubUrl    String?  @map("github_url") @db.VarChar(255)
+  emailPublic  String?  @map("email_public") @db.VarChar(190)
+  sortOrder    Int      @default(0) @map("sort_order")
+  isLeadership Boolean  @default(false) @map("is_leadership")
+  isPublished  Boolean  @default(false) @map("is_published")
+
+  photoMedia   MediaFile?        @relation("TeamMemberPhoto", fields: [photoMediaId], references: [id], onDelete: SetNull)
+  translations TeamTranslation[]
+
+  @@map("team_members")
+}
+
+model TeamTranslation {
+  id           String  @id @default(uuid()) @db.Uuid
+  teamMemberId String  @map("team_member_id") @db.Uuid
+  locale       String  @db.VarChar(5)
+  position     String  @db.VarChar(150)
+  bio          String? @db.Text
+
+  teamMember TeamMember @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
+
+  @@unique([teamMemberId, locale])
+  @@map("team_translations")
+}
+
+model Award {
+  id              String    @id @default(uuid()) @db.Uuid
+  title           String    @db.VarChar(200)
+  issuer          String    @db.VarChar(150)
+  year            Int
+  logoMediaId     String?   @map("logo_media_id") @db.Uuid
+  type            AwardType
+  url             String?   @db.VarChar(255)
+  verificationUrl String?   @map("verification_url") @db.VarChar(500)
+  credentialId    String?   @map("credential_id") @db.VarChar(150)
+  isVerified      Boolean   @default(false) @map("is_verified")
+  sortOrder       Int       @default(0) @map("sort_order")
+
+  logoMedia MediaFile? @relation("AwardLogo", fields: [logoMediaId], references: [id], onDelete: SetNull)
+
+  @@map("awards")
+}
+
+model Faq {
+  id          String      @id @default(uuid()) @db.Uuid
+  category    FaqCategory @default(general)
+  serviceId   String?     @map("service_id") @db.Uuid
+  sourceNote  String?     @map("source_note") @db.Text
+  sortOrder   Int         @default(0) @map("sort_order")
+  isPublished Boolean     @default(false) @map("is_published")
+
+  service      Service?         @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  translations FaqTranslation[]
+
+  @@map("faqs")
+}
+
+model FaqTranslation {
+  id       String @id @default(uuid()) @db.Uuid
+  faqId    String @map("faq_id") @db.Uuid
+  locale   String @db.VarChar(5)
+  question String @db.Text
+  answer   String @db.Text
+
+  faq Faq @relation(fields: [faqId], references: [id], onDelete: Cascade)
+
+  @@unique([faqId, locale])
+  @@map("faq_translations")
+}
+
+model Page {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique @db.VarChar(100)
+  template    String?  @db.VarChar(100)
+  isPublished Boolean  @default(false) @map("is_published")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  translations PageTranslation[]
+
+  @@map("pages")
+}
+
+model PageTranslation {
+  id     String @id @default(uuid()) @db.Uuid
+  pageId String @map("page_id") @db.Uuid
+  locale String @db.VarChar(5)
+  title  String @db.VarChar(200)
+  blocks Json?
+
+  page Page @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@unique([pageId, locale])
+  @@map("page_translations")
+}
+
+// ----------------------------------------------------
+// BLOG (E3.3)
+// ----------------------------------------------------
+
+model PostCategory {
+  id        String @id @default(uuid()) @db.Uuid
+  slug      String @unique @db.VarChar(100)
+  sortOrder Int    @default(0) @map("sort_order")
+
+  translations PostCategoryTranslation[]
+  posts        Post[]
+
+  @@map("post_categories")
+}
+
+model PostCategoryTranslation {
+  id          String  @id @default(uuid()) @db.Uuid
+  categoryId  String  @map("category_id") @db.Uuid
+  locale      String  @db.VarChar(5)
+  name        String  @db.VarChar(150)
+  description String? @db.Text
+
+  category PostCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, locale])
+  @@map("post_category_translations")
+}
+
+model Tag {
+  id   String @id @default(uuid()) @db.Uuid
+  slug String @unique @db.VarChar(100)
+  name String @db.VarChar(100)
+
+  posts PostTag[]
+
+  @@map("tags")
+}
+
+model Post {
+  id             String     @id @default(uuid()) @db.Uuid
+  slug           String     @unique @db.VarChar(200)
+  authorId       String     @map("author_id") @db.Uuid
+  categoryId     String?    @map("category_id") @db.Uuid
+  coverMediaId   String?    @map("cover_media_id") @db.Uuid
+  status         PostStatus @default(draft)
+  scheduledAt    DateTime?  @map("scheduled_at") @db.Timestamptz
+  publishedAt    DateTime?  @map("published_at") @db.Timestamptz
+  readingTimeMin Int?       @map("reading_time_min") @db.SmallInt
+  viewCount      Int        @default(0) @map("view_count")
+  isFeatured     Boolean    @default(false) @map("is_featured")
+  createdAt      DateTime   @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime   @updatedAt @map("updated_at") @db.Timestamptz
+  deletedAt      DateTime?  @map("deleted_at") @db.Timestamptz
+
+  author       User              @relation("PostAuthor", fields: [authorId], references: [id], onDelete: Restrict)
+  category     PostCategory?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  coverMedia   MediaFile?        @relation("PostCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
+  translations PostTranslation[]
+  tags         PostTag[]
+
+  @@index([status, publishedAt(sort: Desc)])
+  @@map("posts")
+}
+
+model PostTranslation {
+  id      String  @id @default(uuid()) @db.Uuid
+  postId  String  @map("post_id") @db.Uuid
+  locale  String  @db.VarChar(5)
+  title   String  @db.VarChar(255)
+  excerpt String? @db.Text
+  content String  @db.Text
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, locale])
+  @@map("post_translations")
+}
+
+model PostTag {
+  postId String @map("post_id") @db.Uuid
+  tagId  String @map("tag_id") @db.Uuid
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@map("post_tags")
+}
+
+// ----------------------------------------------------
+// LEADS & COMMUNICATION (E3.4 + C7.2)
+// ----------------------------------------------------
+
+model Lead {
+  id             String         @id @default(uuid()) @db.Uuid
+  sourceType     LeadSourceType @map("source_type")
+  fullName       String         @map("full_name") @db.VarChar(150)
+  email          String         @db.VarChar(190)
+  phone          String?        @db.VarChar(30)
+  companyName    String?        @map("company_name") @db.VarChar(150)
+  jobTitle       String?        @map("job_title") @db.VarChar(100)
+  status         LeadStatus     @default(new)
+  assignedTo     String?        @map("assigned_to") @db.Uuid
+  priority       LeadPriority   @default(medium)
+  utmSource      String?        @map("utm_source") @db.VarChar(100)
+  utmMedium      String?        @map("utm_medium") @db.VarChar(100)
+  utmCampaign    String?        @map("utm_campaign") @db.VarChar(100)
+  utmTerm        String?        @map("utm_term") @db.VarChar(100)
+  utmContent     String?        @map("utm_content") @db.VarChar(100)
+  referrerUrl    String?        @map("referrer_url") @db.VarChar(500)
+  landingPage    String?        @map("landing_page") @db.VarChar(500)
+  locale         String?        @db.VarChar(5)
+  ipAddress      String?        @map("ip_address") @db.VarChar(45)
+  consentPrivacy Boolean        @map("consent_privacy")
+  consentAt      DateTime?      @map("consent_at") @db.Timestamptz
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+
+  assignedUser User?                  @relation("LeadAssignedUser", fields: [assignedTo], references: [id], onDelete: SetNull)
+  notes        LeadNote[]
+  history      LeadStatusHistory[]
+  messages     ContactMessage[]
+  brief        ProjectBrief?
+  bookings     ConsultationBooking[]
+
+  @@index([status, createdAt(sort: Desc)])
+  @@index([assignedTo])
+  @@index([email])
+  @@index([utmSource, utmCampaign])
+  @@map("leads")
+}
+
+model ContactMessage {
+  id             String         @id @default(uuid()) @db.Uuid
+  leadId         String         @map("lead_id") @db.Uuid
+  subject        String?        @db.VarChar(200)
+  message        String         @db.Text
+  readStatus     ReadStatus     @default(unread) @map("read_status")
+  readAt         DateTime?      @map("read_at") @db.Timestamptz
+  readBy         String?        @map("read_by") @db.Uuid
+  followUpStatus FollowUpStatus @default(none) @map("follow_up_status")
+  followUpNote   String?        @map("follow_up_note") @db.Text
+  repliedAt      DateTime?      @map("replied_at") @db.Timestamptz
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz
+
+  lead       Lead  @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  readByUser User? @relation("ContactMessageReadBy", fields: [readBy], references: [id], onDelete: SetNull)
+
+  @@map("contact_messages")
+}
+
+model ProjectBrief {
+  id                String      @id @default(uuid()) @db.Uuid
+  leadId            String      @unique @map("lead_id") @db.Uuid
+  projectType       ProjectType @map("project_type")
+  projectName       String?     @map("project_name") @db.VarChar(150)
+  description       String      @db.Text
+  features          Json?
+  budgetRange       String?     @map("budget_range") @db.VarChar(100)
+  timelineRange     String?     @map("timeline_range") @db.VarChar(100)
+  hasExistingSystem Boolean     @default(false) @map("has_existing_system")
+  referenceLinks    Json?       @map("reference_links")
+  additionalNotes   String?     @map("additional_notes") @db.Text
+  createdAt         DateTime    @default(now()) @map("created_at") @db.Timestamptz
+
+  lead        Lead              @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  attachments BriefAttachment[]
+
+  @@map("project_briefs")
+}
+
+model BriefAttachment {
+  id              String   @id @default(uuid()) @db.Uuid
+  briefId         String   @map("brief_id") @db.Uuid
+  mediaId         String   @map("media_id") @db.Uuid
+  originalName    String   @map("original_name") @db.VarChar(255)
+  sizeBytes       Int      @map("size_bytes")
+  mimeType        String   @map("mime_type") @db.VarChar(100)
+  virusScanStatus String?  @default("pending") @map("virus_scan_status") @db.VarChar(50)
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  brief ProjectBrief @relation(fields: [briefId], references: [id], onDelete: Cascade)
+  media MediaFile    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@map("brief_attachments")
+}
+
+model ConsultationBooking {
+  id                String        @id @default(uuid()) @db.Uuid
+  leadId            String        @map("lead_id") @db.Uuid
+  preferredDate     DateTime      @map("preferred_date") @db.Date
+  preferredTimeSlot String        @map("preferred_time_slot") @db.VarChar(20)
+  topic             String?       @db.VarChar(255)
+  notes             String?       @db.Text
+  status            BookingStatus @default(pending)
+  adminNote         String?       @map("admin_note") @db.Text
+  handledBy         String?       @map("handled_by") @db.Uuid
+  createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime      @updatedAt @map("updated_at") @db.Timestamptz
+
+  lead    Lead  @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  handler User? @relation("BookingHandledBy", fields: [handledBy], references: [id], onDelete: SetNull)
+
+  @@unique([preferredDate, preferredTimeSlot])
+  @@map("consultation_bookings")
+}
+
+model LeadNote {
+  id        String   @id @default(uuid()) @db.Uuid
+  leadId    String   @map("lead_id") @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  note      String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@map("lead_notes")
+}
+
+model LeadStatusHistory {
+  id         String   @id @default(uuid()) @db.Uuid
+  leadId     String   @map("lead_id") @db.Uuid
+  fromStatus String?  @map("from_status") @db.VarChar(50)
+  toStatus   String   @map("to_status") @db.VarChar(50)
+  changedBy  String   @map("changed_by") @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  user User @relation("LeadStatusChangedBy", fields: [changedBy], references: [id], onDelete: Restrict)
+
+  @@map("lead_status_history")
+}
+
+model NewsletterSubscriber {
+  id             String           @id @default(uuid()) @db.Uuid
+  email          String           @unique @db.VarChar(190)
+  fullName       String?          @map("full_name") @db.VarChar(150)
+  status         SubscriberStatus @default(pending)
+  confirmToken   String?          @map("confirm_token") @db.VarChar(100)
+  confirmedAt    DateTime?        @map("confirmed_at") @db.Timestamptz
+  unsubscribedAt DateTime?        @map("unsubscribed_at") @db.Timestamptz
+  source         String?          @db.VarChar(100)
+  createdAt      DateTime         @default(now()) @map("created_at") @db.Timestamptz
+
+  @@map("newsletter_subscribers")
+}
+
+// ----------------------------------------------------
+// CAREERS (E3.5)
+// ----------------------------------------------------
+
+model JobOpening {
+  id             String           @id @default(uuid()) @db.Uuid
+  slug           String           @unique @db.VarChar(150)
+  department     String?          @db.VarChar(100)
+  employmentType EmploymentType   @default(full_time) @map("employment_type")
+  workMode       WorkMode         @default(onsite) @map("work_mode")
+  location       String?          @db.VarChar(150)
+  salaryMin      Decimal?         @map("salary_min") @db.Decimal(14, 2)
+  salaryMax      Decimal?         @map("salary_max") @db.Decimal(14, 2)
+  salaryCurrency String?          @default("IDR") @map("salary_currency") @db.VarChar(10)
+  showSalary     Boolean          @default(false) @map("show_salary")
+  status         JobOpeningStatus @default(draft)
+  openedAt       DateTime?        @map("opened_at") @db.Timestamptz
+  closesAt       DateTime?        @map("closes_at") @db.Timestamptz
+  createdBy      String           @map("created_by") @db.Uuid
+  createdAt      DateTime         @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime         @updatedAt @map("updated_at") @db.Timestamptz
+
+  author       User             @relation("JobOpeningAuthor", fields: [createdBy], references: [id], onDelete: Restrict)
+  translations JobTranslation[]
+  applications JobApplication[]
+
+  @@map("job_openings")
+}
+
+model JobTranslation {
+  id               String  @id @default(uuid()) @db.Uuid
+  jobId            String  @map("job_id") @db.Uuid
+  locale           String  @db.VarChar(5)
+  title            String  @db.VarChar(200)
+  description      String? @db.Text
+  responsibilities String? @db.Text
+  requirements     String? @db.Text
+  benefits         String? @db.Text
+
+  job JobOpening @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, locale])
+  @@map("job_translations")
+}
+
+model JobApplication {
+  id             String            @id @default(uuid()) @db.Uuid
+  jobId          String?           @map("job_id") @db.Uuid
+  fullName       String            @map("full_name") @db.VarChar(150)
+  email          String            @db.VarChar(190)
+  phone          String?           @db.VarChar(30)
+  cvMediaId      String?           @map("cv_media_id") @db.Uuid
+  portfolioUrl   String?           @map("portfolio_url") @db.VarChar(255)
+  githubUrl      String?           @map("github_url") @db.VarChar(255)
+  linkedinUrl    String?           @map("linkedin_url") @db.VarChar(255)
+  coverLetter    String?           @map("cover_letter") @db.Text
+  expectedSalary Decimal?          @map("expected_salary") @db.Decimal(14, 2)
+  availableFrom  DateTime?         @map("available_from") @db.Date
+  status         ApplicationStatus @default(new)
+  rating         Int?              @db.SmallInt
+  consentPrivacy Boolean           @map("consent_privacy")
+  createdAt      DateTime          @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime          @updatedAt @map("updated_at") @db.Timestamptz
+
+  job     JobOpening?                @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  cvMedia MediaFile?                 @relation("AppCvMedia", fields: [cvMediaId], references: [id], onDelete: SetNull)
+  history ApplicationStatusHistory[]
+
+  @@index([jobId, status])
+  @@map("job_applications")
+}
+
+model ApplicationStatusHistory {
+  id            String   @id @default(uuid()) @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  fromStatus    String?  @map("from_status") @db.VarChar(50)
+  toStatus      String   @map("to_status") @db.VarChar(50)
+  note          String?  @db.Text
+  changedBy     String   @map("changed_by") @db.Uuid
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  application JobApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  user        User           @relation("AppStatusChangedBy", fields: [changedBy], references: [id], onDelete: Restrict)
+
+  @@map("application_status_history")
+}
+
+// ----------------------------------------------------
+// SYSTEM & ASSETS (E3.6 + C7.2)
+// ----------------------------------------------------
+
+model MediaFile {
+  id             String    @id @default(uuid()) @db.Uuid
+  uploadedBy     String?   @map("uploaded_by") @db.Uuid
+  storageKey     String    @map("storage_key") @db.VarChar(500)
+  url            String    @db.VarChar(500)
+  originalName   String    @map("original_name") @db.VarChar(255)
+  mimeType       String    @map("mime_type") @db.VarChar(100)
+  sizeBytes      Int       @map("size_bytes")
+  width          Int?
+  height         Int?
+  altText        String?   @map("alt_text") @db.VarChar(255)
+  folder         String?   @db.VarChar(100)
+  isPublic       Boolean   @default(true) @map("is_public")
+  isGallery      Boolean   @default(false) @map("is_gallery")
+  checksumSha256 String?   @map("checksum_sha256") @db.VarChar(64)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamptz
+
+  uploader User? @relation("MediaUploadedBy", fields: [uploadedBy], references: [id], onDelete: SetNull)
+
+  userAvatars         User[]                @relation("UserAvatar")
+  companyProfiles     CompanyProfile[]      @relation("CompanyProfileLogo")
+  serviceCovers       Service[]             @relation("ServiceCover")
+  techLogos           Technology[]          @relation("TechLogo")
+  clientLogos         Client[]              @relation("ClientLogo")
+  projectCovers       Project[]             @relation("ProjectCover")
+  projectMediaList    ProjectMedia[]
+  testimonialPhotos   Testimonial[]         @relation("TestimonialAuthorPhoto")
+  testimonialConsents Testimonial[]         @relation("TestimonialConsentDoc")
+  teamMemberPhotos    TeamMember[]          @relation("TeamMemberPhoto")
+  awardLogos          Award[]               @relation("AwardLogo")
+  postCovers          Post[]                @relation("PostCover")
+  briefAttachments    BriefAttachment[]
+  jobApplicationsCv   JobApplication[]      @relation("AppCvMedia")
+  galleryItems        GalleryItem[]
+  seoOgImages         SeoMetadata[]         @relation("SeoOgImage")
+
+  @@index([folder])
+  @@index([checksumSha256])
+  @@map("media_files")
+}
+
+model GalleryItem {
+  id          String   @id @default(uuid()) @db.Uuid
+  mediaId     String   @map("media_id") @db.Uuid
+  title       String?  @db.VarChar(150)
+  altText     String   @map("alt_text") @db.VarChar(255)
+  caption     String?  @db.Text
+  sortOrder   Int      @default(0) @map("sort_order")
+  isPublished Boolean  @default(false) @map("is_published")
+  createdBy   String?  @map("created_by") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  media   MediaFile @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  creator User?     @relation("GalleryItemCreatedBy", fields: [createdBy], references: [id], onDelete: SetNull)
+
+  @@map("gallery_items")
+}
+
+model SiteSetting {
+  id        String   @id @default(uuid()) @db.Uuid
+  key       String   @unique @db.VarChar(100)
+  value     Json
+  group     String?  @db.VarChar(50)
+  updatedBy String?  @map("updated_by") @db.Uuid
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  updater User? @relation("SiteSettingUpdatedBy", fields: [updatedBy], references: [id], onDelete: SetNull)
+
+  @@map("site_settings")
+}
+
+model SeoMetadata {
+  id              String  @id @default(uuid()) @db.Uuid
+  entityType      String  @map("entity_type") @db.VarChar(50)
+  entityId        String  @map("entity_id") @db.VarChar(100)
+  locale          String  @db.VarChar(5)
+  metaTitle       String? @map("meta_title") @db.VarChar(255)
+  metaDescription String? @map("meta_description") @db.Text
+  ogImageMediaId  String? @map("og_image_media_id") @db.Uuid
+  canonicalUrl    String? @map("canonical_url") @db.VarChar(500)
+  robots          String? @default("index,follow") @db.VarChar(50)
+  schemaJson      Json?   @map("schema_json")
+
+  ogImage MediaFile? @relation("SeoOgImage", fields: [ogImageMediaId], references: [id], onDelete: SetNull)
+
+  @@unique([entityType, entityId, locale])
+  @@map("seo_metadata")
+}
+
+model Redirect {
+  id         String   @id @default(uuid()) @db.Uuid
+  fromPath   String   @unique @map("from_path") @db.VarChar(500)
+  toPath     String   @map("to_path") @db.VarChar(500)
+  statusCode Int      @default(301) @map("status_code")
+  hitCount   Int      @default(0) @map("hit_count")
+  isActive   Boolean  @default(true) @map("is_active")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@map("redirects")
+}
+
+model MenuItem {
+  id           String       @id @default(uuid()) @db.Uuid
+  menuLocation MenuLocation @map("menu_location")
+  parentId     String?      @map("parent_id") @db.Uuid
+  url          String       @db.VarChar(500)
+  targetExists Boolean      @default(true) @map("target_exists")
+  sortOrder    Int          @default(0) @map("sort_order")
+  isActive     Boolean      @default(true) @map("is_active")
+  openInNewTab Boolean      @default(false) @map("open_in_new_tab")
+
+  parent       MenuItem?             @relation("MenuItemChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children     MenuItem[]            @relation("MenuItemChildren")
+  translations MenuItemTranslation[]
+
+  @@map("menu_items")
+}
+
+model MenuItemTranslation {
+  id         String @id @default(uuid()) @db.Uuid
+  menuItemId String @map("menu_item_id") @db.Uuid
+  locale     String @db.VarChar(5)
+  label      String @db.VarChar(100)
+
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([menuItemId, locale])
+  @@map("menu_item_translations")
+}
+
+model CookieConsent {
+  id            String   @id @default(uuid()) @db.Uuid
+  visitorId     String   @map("visitor_id") @db.VarChar(100)
+  necessary     Boolean  @default(true)
+  analytics     Boolean  @default(false)
+  marketing     Boolean  @default(false)
+  ipHash        String?  @map("ip_hash") @db.VarChar(64)
+  userAgent     String?  @map("user_agent") @db.Text
+  policyVersion String?  @map("policy_version") @db.VarChar(20)
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@map("cookie_consents")
+}
+
+// ----------------------------------------------------
+// ANTISLOP & QUALITY (A9.2)
+// ----------------------------------------------------
+
+model CompanyStat {
+  id                String   @id @default(uuid()) @db.Uuid
+  label             String   @db.VarChar(100)
+  value             String   @db.VarChar(50)
+  sourceDescription String   @map("source_description") @db.Text
+  sourceUrl         String?  @map("source_url") @db.VarChar(500)
+  asOfDate          DateTime @map("as_of_date") @db.Date
+  isVerified        Boolean  @default(false) @map("is_verified")
+  isPublished       Boolean  @default(false) @map("is_published")
+
+  @@index([isVerified, isPublished])
+  @@map("company_stats")
+}
+
+model DesignDirection {
+  id            String                @id @default(uuid()) @db.Uuid
+  brandName     String?               @map("brand_name") @db.VarChar(150)
+  tagline       String?               @db.VarChar(255)
+  personality   Json?
+  palette       Json?
+  typography    Json?
+  identityMotif String?               @map("identity_motif") @db.Text
+  energy        Int                   @default(2) @db.SmallInt
+  rhythm        Int                   @default(2) @db.SmallInt
+  motion        Int                   @default(2) @db.SmallInt
+  themePolicy   ThemePolicy           @default(dark) @map("theme_policy")
+  themeReason   String?               @map("theme_reason") @db.Text
+  status        DesignDirectionStatus @default(missing)
+  approvedBy    String?               @map("approved_by") @db.Uuid
+  approvedAt    DateTime?             @map("approved_at") @db.Timestamptz
+
+  approver User? @relation("DesignDirectionApprovedBy", fields: [approvedBy], references: [id], onDelete: SetNull)
+
+  @@map("design_direction")
+}
+
+model DesignDecision {
+  id        String             @id @default(uuid()) @db.Uuid
+  area      DesignDecisionArea
+  decision  String             @db.VarChar(255)
+  reason    String             @db.VarChar(255)
+  ruleRef   String?            @map("rule_ref") @db.VarChar(20)
+  createdBy String?            @map("created_by") @db.Uuid
+  createdAt DateTime           @default(now()) @map("created_at") @db.Timestamptz
+
+  creator User? @relation("DesignDecisionCreatedBy", fields: [createdBy], references: [id], onDelete: SetNull)
+
+  @@map("design_decisions")
+}
+
+model DeliveryGateReport {
+  id            String            @id @default(uuid()) @db.Uuid
+  releaseTag    String            @map("release_tag") @db.VarChar(50)
+  block         DeliveryGateBlock
+  ruleRef       String?           @map("rule_ref") @db.VarChar(20)
+  status        GateReportStatus
+  evidence      String            @db.Text
+  measuredValue String?           @map("measured_value") @db.VarChar(100)
+  checkedBy     String?           @map("checked_by") @db.Uuid
+  checkedAt     DateTime?         @map("checked_at") @db.Timestamptz
+
+  checker User? @relation("GateReportCheckedBy", fields: [checkedBy], references: [id], onDelete: SetNull)
+
+  @@index([releaseTag, status])
+  @@map("delivery_gate_reports")
+}
