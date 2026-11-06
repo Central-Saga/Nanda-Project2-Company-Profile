@@ -66,16 +66,16 @@ export default async function HomePage() {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 pt-4 max-w-md sm:max-w-none mx-auto w-full">
               <Link
                 href="/mulai-proyek"
-                className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white rounded-xl text-sm font-semibold transition-all shadow-[0_0_30px_rgba(220,38,38,0.4)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)] border border-red-500/30"
+                className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white rounded-xl text-sm font-semibold transition-all shadow-[0_0_30px_rgba(220,38,38,0.4)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)] border border-red-500/30 text-center"
               >
                 Mulai Proyek Anda &rarr;
               </Link>
               <Link
                 href="/booking"
-                className="w-full sm:w-auto px-7 py-3.5 bg-white/[0.04] hover:bg-white/[0.08] text-zinc-200 border border-white/[0.12] hover:border-white/[0.2] rounded-xl text-sm font-medium transition backdrop-blur-xl"
+                className="w-full sm:w-auto px-7 py-3.5 bg-white/[0.04] hover:bg-white/[0.08] text-zinc-200 border border-white/[0.12] hover:border-white/[0.2] rounded-xl text-sm font-medium transition backdrop-blur-xl text-center"
               >
                 Jadwalkan Konsultasi
               </Link>
