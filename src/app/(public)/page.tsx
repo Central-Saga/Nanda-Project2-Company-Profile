@@ -192,7 +192,7 @@ export default async function HomePage() {
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-medium text-zinc-400">
-                        {project.slug}
+                        Studi Kasus
                       </span>
                       {project.isFeatured && (
                         <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
@@ -221,7 +221,7 @@ export default async function HomePage() {
 
                     <div className="pt-2">
                       <Link
-                        href={`/portofolio/${project.slug}`}
+                        href={`/portofolio/$Studi Kasus`}
                         className="text-xs font-semibold text-red-400 hover:text-red-300 transition"
                       >
                         Detail Studi Kasus &rarr;

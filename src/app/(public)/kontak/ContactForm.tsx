@@ -11,7 +11,7 @@ export function ContactForm() {
     <form action={formAction} className="space-y-4 max-w-xl">
       {state?.message && (
         <div
-          className={`p-4 rounded text-xs font-mono border ${
+          className={`p-4 rounded text-xs font-sans border ${
             state.success
               ? "bg-green-950/40 border-green-800 text-green-300"
               : "bg-red-950/40 border-red-800 text-red-300"
@@ -32,7 +32,7 @@ export function ContactForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+          <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
             Nama Lengkap <span className="text-red-500">*</span>
           </label>
           <input
@@ -48,7 +48,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+          <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
             Email Perusahaan <span className="text-red-500">*</span>
           </label>
           <input
@@ -66,7 +66,7 @@ export function ContactForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+          <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
             Nomor Telepon
           </label>
           <input
@@ -81,7 +81,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+          <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
             Nama Perusahaan
           </label>
           <input
@@ -97,7 +97,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+        <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
           Subjek Pesan <span className="text-red-500">*</span>
         </label>
         <input
@@ -113,7 +113,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+        <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
           Pesan <span className="text-red-500">*</span>
         </label>
         <textarea

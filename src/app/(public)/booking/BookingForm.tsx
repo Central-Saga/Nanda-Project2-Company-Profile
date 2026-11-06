@@ -13,7 +13,7 @@ export function BookingForm() {
     <form action={formAction} className="space-y-6 max-w-2xl">
       {state?.message && (
         <div
-          className={`p-4 rounded text-xs font-mono border ${
+          className={`p-4 rounded text-xs font-sans border ${
             state.success
               ? "bg-green-950/40 border-green-800 text-green-300"
               : "bg-red-950/40 border-red-800 text-red-300"
@@ -32,13 +32,13 @@ export function BookingForm() {
       />
 
       <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-lg space-y-4">
-        <h2 className="text-xs font-bold font-mono uppercase tracking-wider text-zinc-300">
+        <h2 className="text-xs font-bold font-sans uppercase tracking-wider text-zinc-300">
           1. Data Pemohon
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+            <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
               Nama Lengkap <span className="text-red-500">*</span>
             </label>
             <input
@@ -54,7 +54,7 @@ export function BookingForm() {
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+            <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
               Email Kerja <span className="text-red-500">*</span>
             </label>
             <input
@@ -72,7 +72,7 @@ export function BookingForm() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+            <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
               Nomor Telepon
             </label>
             <input
@@ -84,7 +84,7 @@ export function BookingForm() {
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+            <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
               Nama Organisasi / Perusahaan
             </label>
             <input
@@ -98,13 +98,13 @@ export function BookingForm() {
       </div>
 
       <div className="p-5 bg-zinc-950 border border-zinc-900 rounded-lg space-y-4">
-        <h2 className="text-xs font-bold font-mono uppercase tracking-wider text-zinc-300">
+        <h2 className="text-xs font-bold font-sans uppercase tracking-wider text-zinc-300">
           2. Waktu & Topik Konsultasi
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+            <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
               Pilihan Tanggal <span className="text-red-500">*</span>
             </label>
             <input
@@ -113,7 +113,7 @@ export function BookingForm() {
               required
               min={todayStr}
               defaultValue={todayStr}
-              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 text-zinc-100 rounded text-sm focus:outline-none focus:border-red-600 font-mono text-xs"
+              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 text-zinc-100 rounded text-sm focus:outline-none focus:border-red-600 font-sans text-xs"
             />
             {state?.errors?.preferredDate && (
               <p className="text-xs text-red-400 mt-1">{state.errors.preferredDate[0]}</p>
@@ -121,13 +121,13 @@ export function BookingForm() {
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+            <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
               Slot Waktu (WIB) <span className="text-red-500">*</span>
             </label>
             <select
               name="preferredTimeSlot"
               required
-              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 text-zinc-100 rounded text-sm focus:outline-none focus:border-red-600 font-mono text-xs"
+              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 text-zinc-100 rounded text-sm focus:outline-none focus:border-red-600 font-sans text-xs"
             >
               <option value="09:00 - 10:00 WIB">09:00 - 10:00 WIB</option>
               <option value="10:30 - 11:30 WIB">10:30 - 11:30 WIB</option>
@@ -138,7 +138,7 @@ export function BookingForm() {
         </div>
 
         <div>
-          <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1">
+          <label className="block text-xs font-sans uppercase tracking-wider text-zinc-400 mb-1">
             Topik Masalah atau Diskusi Arsitektur <span className="text-red-500">*</span>
           </label>
           <textarea

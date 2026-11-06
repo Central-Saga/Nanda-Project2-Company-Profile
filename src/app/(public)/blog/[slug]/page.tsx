@@ -1,15 +1,15 @@
 import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-interface BlogPostPageProps {
+interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps) {
+export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const post = await prisma.post.findFirst({
-    where: { slug, status: "published", deletedAt: null },
+  const post = await prisma.post.findUnique({
+    where: { slug },
     include: { translations: { where: { locale: "id" } } },
   });
 
@@ -18,17 +18,19 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   };
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = await prisma.post.findFirst({
-    where: { slug, status: "published", deletedAt: null },
+  const post = await prisma.post.findUnique({
+    where: { slug },
     include: {
       translations: { where: { locale: "id" } },
-      author: true,
+      category: {
+        include: { translations: { where: { locale: "id" } } },
+      },
     },
   });
 
-  if (!post) {
+  if (!post || post.status !== "published" || post.deletedAt) {
     notFound();
   }
 
@@ -38,42 +40,47 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     : "";
 
   return (
-    <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-10">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-10">
       <Link
         href="/blog"
-        className="text-xs font-mono text-zinc-500 hover:text-zinc-300 transition"
+        className="text-xs font-medium text-zinc-400 hover:text-white transition flex items-center gap-1.5"
       >
-        &larr; Kembali ke Daftar Artikel
+        <span>&larr;</span>
+        <span>Kembali ke Wawasan</span>
       </Link>
 
-      <header className="space-y-4 border-b border-zinc-900 pb-8">
-        <div className="flex items-center gap-3 text-xs font-mono text-zinc-500">
-          <time dateTime={dateStr}>{dateStr}</time>
-          {post.author?.fullName && (
+      <div className="space-y-4">
+        <div className="flex items-center gap-3 text-xs text-zinc-400">
+          <span>{dateStr}</span>
+          {post.category && (
             <>
               <span>&bull;</span>
-              <span>Oleh {post.author.fullName}</span>
+              <span className="text-zinc-300 font-medium">
+                {post.category.translations[0]?.name || post.category.slug}
+              </span>
             </>
           )}
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-white uppercase leading-tight">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
           {trans?.title || post.slug}
         </h1>
-      </header>
-
-      <div className="text-sm text-zinc-300 font-sans leading-relaxed whitespace-pre-line space-y-4">
-        {trans?.content}
       </div>
 
-      <footer className="pt-8 border-t border-zinc-900 flex justify-between items-center text-xs font-mono text-zinc-500">
+      <div className="p-8 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl">
+        <div className="text-zinc-300 text-sm sm:text-base leading-relaxed whitespace-pre-line space-y-4 font-normal">
+          {trans?.content || ""}
+        </div>
+      </div>
+
+      <footer className="pt-8 border-t border-white/[0.08] flex justify-between items-center text-xs text-zinc-400">
         <Link href="/blog" className="hover:text-white transition">
-          &larr; Arsip Tulisan Lainnya
+          &larr; Indeks Artikel
         </Link>
-        <Link href="/mulai-proyek" className="text-red-500 hover:text-red-400 transition">
-          Diskusikan Penerapan Sistem &rarr;
+        <Link href="/mulai-proyek" className="text-red-400 hover:text-red-300 transition font-medium">
+          Mulai Diskusi Proyek &rarr;
         </Link>
       </footer>
-    </article>
+    </div>
   );
 }
