@@ -6,7 +6,7 @@ const SECRET_KEY = new TextEncoder().encode(
   process.env.AUTH_SECRET || "default_auth_secret_minimum_32_characters_long_12345"
 );
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Protect /admin routes
